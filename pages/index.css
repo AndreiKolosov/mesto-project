@@ -10,8 +10,8 @@
 @import url(../blocks/content/content.css);
 
 @import url(../blocks/button/button.css);
-@import url(../blocks/button/_place/button_place_edit-button.css);
-@import url(../blocks/button/_place/button_place_add-button.css);
+@import url(../blocks/button/_edit-button/button_edit-button.css);
+@import url(../blocks/button/_add-button/button_add-button.css);
 
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/profile/__avatar/profile__avatar.css);
