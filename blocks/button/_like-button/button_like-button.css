@@ -1,0 +1,15 @@
+.button_like-button {
+  background-image: url(../../../images/buttons/like-button.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  min-width: 22px;
+  min-height: 19px;
+}
+
+.button_like-button:hover {
+  opacity: 0.5;
+}
+
+.button_like-button:active {
+  background-image: url(../../../images/buttons/like-button-active.svg);
+}

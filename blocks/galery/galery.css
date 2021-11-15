@@ -1,3 +1,9 @@
 .galery {
   padding: 50px 0 0;
 }
+
+@media screen and (max-width: 768px) {
+  .galery {
+    padding: 36px 19px 0;
+  }
+}
