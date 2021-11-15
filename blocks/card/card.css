@@ -1,0 +1,8 @@
+.card {
+  max-width: 282px;
+  max-height: 361px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-sizing: border-box;
+  line-height: 0;
+}

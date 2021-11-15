@@ -18,19 +18,66 @@
       <div class="header__logo"></div>
     </header>
     <main class="content">
+
       <section class="profile">
         <img src="./images/profile-Jacques/avatar/avatar.jpg" class="profile__avatar">
-        <div class="profile__info">
-          <h1 class="profile__user-name">Жак-Ив Кусто</h1>
+        <section class="profile__info">
+          <div class="profile__user">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button type="submit" class="button button_place_edit-button"><img src="./images/buttons/edit-button.svg"
+                alt="Редактировать"></button>
+          </div>
           <p class="profile__description">Исследователь океана</p>
-        </div>
-        <button type="submit" class="profile__edit-button"><img src="./images/buttons/edit-button.svg" alt=""></button>
+        </section>
+        <button type="submit" class="button button_place_add-button"><img src="./images/buttons/add-button.svg"
+            alt="Добавить карточку"></button>
       </section>
-      <section class="elements">
-        <div class="elements__item">
-          <!-- <img src="#" alt="#" class="elements__item-image"> -->
-          <p class="elements__item-title"></p>
-        </div>
+
+      <section class="galery">
+        <ul class="galery__list">
+          <li class="card">
+            <img src="./images/profile-Jacques/places/first-place.jpg" alt="Карачаевск" class="card-image">
+            <div class="card__description">
+              <p class="card__name">Карачаевск</p>
+              <button class="button button_like"><img src="./images/buttons/like-button.svg" alt="Like"></button>
+            </div>
+          </li>
+          <li class="card">
+            <img src="./images/profile-Jacques/places/second-place.jpg" alt="Гора Эльбрус" class="card-image">
+            <div class="card__description">
+              <p class="card__name">Гора Эльбрус</p>
+              <button class="button button_like"><img src="./images/buttons/like-button.svg" alt="Like"></button>
+            </div>
+          </li>
+          <li class="card">
+            <img src="./images/profile-Jacques/places/third-place.jpg" alt="Домбай" class="card-image">
+            <div class="card__description">
+              <p class="card__name">Домбай</p>
+              <button class="button button_like"><img src="./images/buttons/like-button.svg" alt="Like"></button>
+            </div>
+          </li>
+          <li class="card">
+            <img src="./images/profile-Jacques/places/second-place.jpg" alt="Гора Эльбрус" class="card-image">
+            <div class="card__description">
+              <p class="card__name">Гора Эльбрус</p>
+              <button class="button button_like"><img src="./images/buttons/like-button.svg" alt="Like"></button>
+            </div>
+          </li>
+          <li class="card">
+            <img src="./images/profile-Jacques/places/third-place.jpg" alt="Домбай" class="card-image">
+            <div class="card__description">
+              <p class="card__name">Домбай</p>
+              <button class="button button_like"><img src="./images/buttons/like-button.svg" alt="Like"></button>
+            </div>
+          </li>
+          <li class="card">
+            <img src="./images/profile-Jacques/places/first-place.jpg" alt="Карачаево-Черкесия" class="card-image">
+            <div class="card__description">
+              <p class="card__name">Карачаево-Черкесия</p>
+              <button class="button button_like"><img src="./images/buttons/like-button.svg" alt="Like"></button>
+            </div>
+          </li>
+        </ul>
       </section>
     </main>
     <footer class="footer">

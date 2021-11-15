@@ -9,13 +9,23 @@
 
 @import url(../blocks/content/content.css);
 
+@import url(../blocks/button/button.css);
+@import url(../blocks/button/_place/button_place_edit-button.css);
+@import url(../blocks/button/_place/button_place_add-button.css);
+
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/profile/__avatar/profile__avatar.css);
 @import url(../blocks/profile/__info/profile__info.css);
-@import url(../blocks/profile/__user-name/profile__user-name.css);
+@import url(../blocks/profile/__user/profile__user.css);
+@import url(../blocks/profile/__name/profile__name.css);
 @import url(../blocks/profile/__description/profile__description.css);
-@import url(../blocks/profile/__edit-button/profile__edit-button.css);
-@import url(../blocks/profile/__add-button/profile__add-button.css);
+
+@import url(../blocks/galery/galery.css);
+@import url(../blocks/galery/__list/galery__list.css);
+@import url(../blocks/card/card.css);
+@import url(../blocks/card/__image/card__image.css);
+@import url(../blocks/card/__description/card__description.css);
+@import url(../blocks/card/__name/card__name.css);
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
