@@ -6,7 +6,7 @@
   <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Сайт для обмена фотографиями" />
-  <meta name="keywords" content="#" />
+  <meta name="keywords" content="Место, города, страна, фото, лайк" />
   <meta name="author" content="Андрей Колосов" />
   <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
@@ -19,11 +19,11 @@
     </header>
     <main class="content">
 
-      <section class="profile">
-        <img src="./images/profile-Jacques/avatar/avatar.jpg" class="profile__avatar">
-        <section class="profile__info">
+      <section class="profile" aria-label="Профиль">
+        <img src="./images/profile-Jacques/avatar/avatar.jpg" alt="Аватарка профиля" class="profile__avatar">
+        <section class="profile__info" aria-label="Информация о пользователе">
           <div class="profile__user">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <h2 class="profile__name">Жак-Ив Кусто</h2>
             <p class="profile__description">Исследователь океана</p>
           </div>
           <button type="button" class="button button_edit-button"></button>
@@ -31,7 +31,7 @@
         <button type="button" class="button button_add-button"></button>
       </section>
 
-      <section class="galery">
+      <section class="galery" aria-label="Галерея">
         <ul class="galery__list">
           <li class="card">
             <img src="./images/profile-Jacques/places/first-place.jpg" alt="Карачаевск" class="card-image">
@@ -77,7 +77,7 @@
           </li>
         </ul>
       </section>
-      <section class="popup popup_opened">
+      <section class="popup popup_opene">
         <form class="popup__container" name="user-info">
           <h2 class="popup__heading">Редактировать профиль</h2>
           <fieldset class="popup__input-container">
@@ -88,6 +88,7 @@
           </fieldset>
           <button type="submit" class="button button_save-button">Сохранить</button>
           <button type="button" class="button button_close-button"></button>
+        </form>>
       </section>
     </main>
     <footer class="footer">
