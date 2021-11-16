@@ -1,0 +1,20 @@
+.button_close-button {
+  background-image: url(../../../images/buttons/close-button.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  min-width: 32px;
+  min-height: 32px;
+  background-color: initial;
+  position: absolute;
+  top: -41px;
+  right: -39px;
+}
+
+@media screen and (max-width: 768px) {
+  .button_close-button {
+    min-width: 20px;
+    min-height: 20px;
+    top: -35px;
+    right: 0;
+  }
+}
