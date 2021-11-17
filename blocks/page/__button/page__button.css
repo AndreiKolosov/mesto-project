@@ -1,4 +1,4 @@
-.button {
+.page__button {
   margin: 0;
   padding: 0;
   border: none;
@@ -6,6 +6,6 @@
   transition: opacity linear 0.2s;
 }
 
-.button:hover {
+.page__button:hover {
   opacity: 0.6;
 }

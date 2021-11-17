@@ -17,80 +17,83 @@
     <header class="header">
       <div class="header__logo"></div>
     </header>
-    <main class="content">
 
+    <main class="content">
       <section class="profile" aria-label="Профиль">
         <img src="./images/profile-Jacques/avatar/avatar.jpg" alt="Аватарка профиля" class="profile__avatar">
-        <section class="profile__info" aria-label="Информация о пользователе">
+        <div class="profile__info">
           <div class="profile__user">
-            <h2 class="profile__name">Жак-Ив Кусто</h2>
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
             <p class="profile__description">Исследователь океана</p>
           </div>
-          <button type="button" class="button button_edit-button"></button>
-        </section>
-        <button type="button" class="button button_add-button"></button>
+          <button type="button" class="page__button profile_edit-button"></button>
+        </div>
+        <button type="button" class="page__button profile_add-button"></button>
       </section>
 
       <section class="galery" aria-label="Галерея">
         <ul class="galery__list">
           <li class="card">
-            <img src="./images/profile-Jacques/places/first-place.jpg" alt="Карачаевск" class="card-image">
+            <img src="./images/profile-Jacques/places/first-place.jpg" alt="Карачаевск" class="card__image">
             <div class="card__description">
-              <p class="card__name">Карачаевск</p>
-              <button type="button" class="button button_like-button"></button>
+              <h2 class="card__name">Карачаевск</h2>
+              <button type="button" class="page__button card_like-button"></button>
             </div>
           </li>
           <li class="card">
-            <img src="./images/profile-Jacques/places/second-place.jpg" alt="Гора Эльбрус" class="card-image">
+            <img src="./images/profile-Jacques/places/second-place.jpg" alt="Гора Эльбрус" class="card__image">
             <div class="card__description">
-              <p class="card__name">Гора Эльбрус</p>
-              <button type="button" class="button button_like-button"></button>
+              <h2 class="card__name">Гора Эльбрус</h2>
+              <button type="button" class="page__button card_like-button"></button>
             </div>
           </li>
           <li class="card">
-            <img src="./images/profile-Jacques/places/third-place.jpg" alt="Домбай" class="card-image">
+            <img src="./images/profile-Jacques/places/third-place.jpg" alt="Домбай" class="card__image">
             <div class="card__description">
-              <p class="card__name">Домбай</p>
-              <button type="button" class="button button_like-button"></button>
+              <h2 class="card__name">Домбай</h2>
+              <button type="button" class="page__button card_like-button"></button>
             </div>
           </li>
           <li class="card">
-            <img src="./images/profile-Jacques/places/second-place.jpg" alt="Гора Эльбрус" class="card-image">
+            <img src="./images/profile-Jacques/places/second-place.jpg" alt="Гора Эльбрус" class="card__image">
             <div class="card__description">
-              <p class="card__name">Гора Эльбрус</p>
-              <button type="button" class="button button_like-button"></button>
+              <h2 class="card__name">Гора Эльбрус</h2>
+              <button type="button" class="page__button card_like-button"></button>
             </div>
           </li>
           <li class="card">
-            <img src="./images/profile-Jacques/places/third-place.jpg" alt="Домбай" class="card-image">
+            <img src="./images/profile-Jacques/places/third-place.jpg" alt="Домбай" class="card__image">
             <div class="card__description">
-              <p class="card__name">Домбай</p>
-              <button type="button" class="button button_like-button"></button>
+              <h2 class="card__name">Домбай</h2>
+              <button type="button" class="page__button card_like-button"></button>
             </div>
           </li>
           <li class="card">
-            <img src="./images/profile-Jacques/places/first-place.jpg" alt="Карачаево-Черкесия" class="card-image">
+            <img src="./images/profile-Jacques/places/first-place.jpg" alt="Карачаево-Черкесия" class="card__image">
             <div class="card__description">
-              <p class="card__name">Карачаево-Черкесия</p>
-              <button type="button" class="button button_like-button"></button>
+              <h2 class="card__name">Карачаево-Черкесия</h2>
+              <button type="button" class="page__button card_like-button"></button>
             </div>
           </li>
         </ul>
       </section>
-      <section class="popup popup_opene">
-        <form class="popup__container" name="user-info">
-          <h2 class="popup__heading">Редактировать профиль</h2>
-          <fieldset class="popup__input-container">
-            <input type="text" class="popup__form-item" name="user-name" placeholder="Имя" required
-              value="Жак-Ив Кусто">
-            <input type="text" class="popup__form-item" name="user-description" placeholder="О себе"
+    </main>
+
+    <section class="popup popup_opened">
+      <div class="popup__container">
+        <button type="button" class="page__button popup_close-button"></button>
+        <form class="form">
+          <h2 class="form__heading">Редактировать профиль</h2>
+          <fieldset class="form__user-info">
+            <input type="text" class="form__item" name="user-name" placeholder="Имя" required value="Жак-Ив Кусто">
+            <input type="text" class="form__item" name="user-description" placeholder="О себе"
               value="Исследователь океана">
           </fieldset>
-          <button type="submit" class="button button_save-button">Сохранить</button>
-          <button type="button" class="button button_close-button"></button>
-        </form>>
-      </section>
-    </main>
+          <button type="submit" class="page__button form_save-button">Сохранить</button>
+        </form>
+      </div>
+    </section>
+
     <footer class="footer">
       <p class="footer__copyright">&copy;&nbsp;2021 Mesto Russia</p>
     </footer>

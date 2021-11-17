@@ -1,4 +1,4 @@
-.button_like-button {
+.card_like-button {
   background-image: url(../../../images/buttons/like-button.svg);
   background-size: contain;
   background-repeat: no-repeat;
@@ -6,10 +6,10 @@
   min-height: 19px;
 }
 
-.button_like-button:hover {
+.card_like-button:hover {
   opacity: 0.5;
 }
 
-.button_like-button:active {
+.card_like-button:active {
   background-image: url(../../../images/buttons/like-button-active.svg);
 }
