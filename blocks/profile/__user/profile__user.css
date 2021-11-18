@@ -1,11 +1,17 @@
 .profile__user {
   display: flex;
   flex-direction: column;
-  max-width: 350px;
+  max-width: 400px;
 }
 
-@media screen and (max-width: 1023px) {
+@media screen and (max-width: 1279px) {
   .profile__user {
     padding-top: 26px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .profile__user {
+    max-width: 245px;
   }
 }

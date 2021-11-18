@@ -1,4 +1,4 @@
-.form_save-button {
+.form__save-button {
   min-width: 358px;
   min-height: 50px;
   background-color: #000;
@@ -11,12 +11,12 @@
   margin: 48px 0 0;
 }
 
-.form_save-button:hover {
+.form__save-button:hover {
   opacity: 0.8;
 }
 
 @media screen and (max-width: 768px) {
-  .form_save-button {
+  .form__save-button {
     min-width: 238px;
     min-height: 46px;
     font-size: 14px;

@@ -1,4 +1,4 @@
-.profile_edit-button {
+.profile__edit-button {
   background-image: url(../../../images/buttons/edit-button.svg);
   background-size: contain;
   background-repeat: no-repeat;
@@ -8,14 +8,14 @@
   align-self: center;
 }
 
-@media screen and (max-width: 1023px) {
-  .profile_edit-button {
-    margin: 0 0 0 20px;
+@media screen and (max-width: 1279px) {
+  .profile__edit-button {
+    margin: 0 0 10px 20px;
   }
 }
 
 @media screen and (max-width: 768px) {
-  .profile_edit-button {
+  .profile__edit-button {
     min-width: 18px;
     min-height: 18px;
     margin: 0 0 0 10px;
