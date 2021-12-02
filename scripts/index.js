@@ -18,3 +18,29 @@ profileEditBtn.addEventListener("click", openPopup);
 closePopupBtn.addEventListener("click", function () {
   editWindow.classList.remove("popup_opened");
 });
+
+// Реализую редактирование профиля
+// Выбираю форму
+const formElement = document.querySelector(".form");
+// Поля ввода
+const nameInput = document.querySelector("#user-name");
+const descriptionInput = document.querySelector("#user-description");
+//  Выбираю элементы, которые буду менять с помощью value
+const userName = document.querySelector(".profile__name");
+const userDescription = document.querySelector(".profile__description");
+//  Кнопка сохранить
+const saveEdits = document.querySelector(".form__save-button");
+
+function formSubmitHandler(evt) {
+  evt.preventDefault();
+  userName.textContent = nameInput.value;
+  userDescription.textContent = descriptionInput.value;
+
+  // При клике на кнопку сохранить удаляется класс и закрывается модальное окно
+  saveEdits.addEventListener("click", function () {
+    editWindow.classList.remove("popup_opened");
+  });
+}
+
+//
+formElement.addEventListener("submit", formSubmitHandler);
