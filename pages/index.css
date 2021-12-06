@@ -22,11 +22,14 @@
 
 @import url(../blocks/galery/galery.css);
 @import url(../blocks/galery/__list/galery__list.css);
+
 @import url(../blocks/card/card.css);
 @import url(../blocks/card/__image/card__image.css);
 @import url(../blocks/card/__description/card__description.css);
 @import url(../blocks/card/__name/card__name.css);
 @import url(../blocks/card/__like-button/card__like-button.css);
+@import url(../blocks/card/__like-button/_active/card__like-button_active.css);
+@import url(../blocks/card/__trash-buton/card__trash-button.css);
 
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/_type/popup_type_profile-editor.css);

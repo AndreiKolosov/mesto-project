@@ -9,7 +9,3 @@
 .card__like-button:hover {
   opacity: 0.5;
 }
-
-.card__like-button:active {
-  background-image: url(../../../images/buttons/like-button-active.svg);
-}

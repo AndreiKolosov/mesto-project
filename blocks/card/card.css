@@ -4,4 +4,6 @@
   overflow: hidden;
   box-sizing: border-box;
   line-height: 0;
+  z-index: 1;
+  position: relative;
 }

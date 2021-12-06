@@ -1,17 +1,18 @@
-// Находим кнопку открытия формы редактирования профиля и объявляем переменную
-let profileEditBtn = document.querySelector('.profile__edit-button');
-// Находим кнопку закрытия формы редактирования профиля и объявляем переменную
-let closePopupBtn = document.querySelector('.popup__close-button');
 // Находим окно формы и объявляем переменную
 let editProfile = document.querySelector('.popup');
-
 // Создаем функцию-обработчик, добавляющую класс окну формы
 function openPopup() {
   editProfile.classList.add('popup_opened');
 }
 
+// Находим кнопку открытия формы редактирования профиля и объявляем переменную
+let profileEditBtn = document.querySelector('.profile__edit-button');
+let cardAddBtn = document.querySelector('.profile__add-button');
 // Вешаем слушатель события clik на кнопку редактирования и
 profileEditBtn.addEventListener('click', openPopup);
+
+// Находим кнопку закрытия формы редактирования профиля и объявляем переменную
+let closePopupBtn = document.querySelector('.popup__close-button');
 // Тоже, что и сверху, только функция-обработчик события внутри.
 // Запись выглядит немного короче
 closePopupBtn.addEventListener('click', function () {
@@ -43,3 +44,8 @@ function formSubmitHandler(evt) {
 
 //
 formElement.addEventListener('submit', formSubmitHandler);
+// Кнопка лайка
+const likeBtn = document.querySelector('.card__like-button');
+likeBtn.addEventListener('click', function (event) {
+  event.target.classList.toggle('card__like-button_active');
+});
