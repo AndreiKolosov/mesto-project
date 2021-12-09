@@ -9,11 +9,11 @@ const closeBtnInImage = imagePopup.querySelector('.popup__close-button'); // К�
 const userName = document.querySelector('.profile__name'); // Имя пользователя на странице
 const userDescription = document.querySelector('.profile__description'); // Описание пользователя на странице
 const editorFormElement = document.querySelector('#editor-form'); // Форма редактирования
-let nameInput = document.querySelector('#user-name'); // Поле ввода имени
-let descriptionInput = document.querySelector('#user-description'); // Поле ввода описания
+const nameInput = document.querySelector('#user-name'); // Поле ввода имени
+const descriptionInput = document.querySelector('#user-description'); // Поле ввода описания
 const adderFormElement = document.querySelector('#adder-form'); // Форма добавления карточки
-let placeNameInput = document.querySelector('#place-name'); // Поле ввода имени карточки
-let placeLinkInput = document.querySelector('#place-img-link'); // Поле ввода ссылки на фотографию
+const placeNameInput = document.querySelector('#place-name'); // Поле ввода имени карточки
+const placeLinkInput = document.querySelector('#place-img-link'); // Поле ввода ссылки на фотографию
 const galleryContainer = document.querySelector('.galery__list'); // Контейнер карточек
 const cardTemplate = document.querySelector('.card-template').content; // Шаблон карточки
 const photoSizeBig = document.querySelector('.popup__image'); // Фото в модальном окне
@@ -53,14 +53,14 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened'); // Убирает класс
 } // Функция закрытия модального окна
 
-function formEditorSubmitHandler(evt) {
+function submitEditorForm(evt) {
   evt.preventDefault();
   userName.textContent = nameInput.value; // Значение value поля ввода === текстовому содержимому тега на странице
   userDescription.textContent = descriptionInput.value; // Аналогично верхнему
   closePopup(editorPopup);
 } // Форма редактирования профиля
 
-function formAdderSubmitHandler(evt) {
+function submitAdderForm(evt) {
   evt.preventDefault();
 
   galleryContainer.prepend(
@@ -117,5 +117,5 @@ addBtn.addEventListener('click', () => openPopup(cardAdderPopup)); // Отсле
 closeBtnInEditor.addEventListener('click', () => closePopup(editorPopup)); // Клик по кнопки закрытия
 closeBtnInAdder.addEventListener('click', () => closePopup(cardAdderPopup)); // Клик по кнопки закрытия
 closeBtnInImage.addEventListener('click', () => closePopup(imagePopup)); // Клик по кнопки закрытия
-editorFormElement.addEventListener('submit', formEditorSubmitHandler); // Сабмит формы редактирования
-adderFormElement.addEventListener('submit', formAdderSubmitHandler); // Сабмит формы добавления
+editorFormElement.addEventListener('submit', submitEditorForm); // Сабмит формы редактирования
+adderFormElement.addEventListener('submit', submitAdderForm); // Сабмит формы добавления
