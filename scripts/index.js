@@ -8,10 +8,10 @@ const closeBtnInAdder = cardAdderPopup.querySelector('.popup__close-button'); //
 const closeBtnInImage = imagePopup.querySelector('.popup__close-button'); // Кнопка закрытия окна просмотра фотографии
 const userName = document.querySelector('.profile__name'); // Имя пользователя на странице
 const userDescription = document.querySelector('.profile__description'); // Описание пользователя на странице
-const editorFormElement = document.querySelector('#editor-form'); // Форма редактирования
+const editorForm = document.querySelector('#editor-form'); // Форма редактирования
 const nameInput = document.querySelector('#user-name'); // Поле ввода имени
 const descriptionInput = document.querySelector('#user-description'); // Поле ввода описания
-const adderFormElement = document.querySelector('#adder-form'); // Форма добавления карточки
+const cardsForm = document.querySelector('#adder-form'); // Форма добавления карточки
 const placeNameInput = document.querySelector('#place-name'); // Поле ввода имени карточки
 const placeLinkInput = document.querySelector('#place-img-link'); // Поле ввода ссылки на фотографию
 const galleryContainer = document.querySelector('.galery__list'); // Контейнер карточек
@@ -86,8 +86,7 @@ function submitAdderForm(evt) {
   ); // Отправляю value импутов в качестве параметров фунции, создаю карточку, кладу в начало списка
 
   // Делаю импуты пустыми после закрытия
-  placeLinkInput.value = '';
-  placeNameInput.value = '';
+  cardsForm.reset();
 
   closePopup(cardAdderPopup);
 }
@@ -135,5 +134,5 @@ addBtn.addEventListener('click', () => openPopup(cardAdderPopup)); // Отсле
 closeBtnInEditor.addEventListener('click', () => closePopup(editorPopup)); // Клик по кнопки закрытия
 closeBtnInAdder.addEventListener('click', () => closePopup(cardAdderPopup)); // Клик по кнопки закрытия
 closeBtnInImage.addEventListener('click', () => closePopup(imagePopup)); // Клик по кнопки закрытия
-editorFormElement.addEventListener('submit', submitEditorForm); // Сабмит формы редактирования
-adderFormElement.addEventListener('submit', submitAdderForm); // Сабмит формы добавления
+editorForm.addEventListener('submit', submitEditorForm); // Сабмит формы редактирования
+cardsForm.addEventListener('submit', submitAdderForm); // Сабмит формы добавления
