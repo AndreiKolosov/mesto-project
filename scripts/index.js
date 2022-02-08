@@ -47,11 +47,29 @@ const initialCards = [
 
 function openPopup(popup) {
   popup.classList.add('popup_opened'); // Добавляет класс
+  document.addEventListener('keydown', pressEsc);
+  document.addEventListener('click', overlayClick);
 } // Функция открытия модально окна принимающая на вход переменную нужного модального окна
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened'); // Убирает класс
+  document.removeEventListener('keydown', pressEsc);
+  document.removeEventListener('click', overlayClick);
 } // Функция закрытия модального окна
+
+function pressEsc(evt) {
+  const activePopup = document.querySelector('.popup_opened');
+  if (evt.key === 'Escape') {
+    closePopup(activePopup);
+  }
+}
+
+function overlayClick(evt) {
+  const activePopup = document.querySelector('.popup_opened');
+  if (evt.target.classList.contains('popup')) {
+    closePopup(activePopup);
+  }
+}
 
 function submitEditorForm(evt) {
   evt.preventDefault();
