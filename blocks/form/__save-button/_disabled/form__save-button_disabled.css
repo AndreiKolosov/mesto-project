@@ -4,4 +4,6 @@
   border-radius: 2px;
   background-color: #fff;
   color: #000000;
+  pointer-events: none;
+  user-select: none;
 }
