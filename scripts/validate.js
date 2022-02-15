@@ -12,6 +12,22 @@ const hideInputError = (formElement, inputElement) => {
   errorElement.textContent = '';
 };
 
+const toggleButtonState = (inputList, buttonElement) => {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.classList.add('form__save-button_disabled');
+    buttonElement.disabled = true;
+  } else {
+    buttonElement.classList.remove('form__save-button_disabled');
+    buttonElement.disabled = false;
+  }
+};
+
+const hasInvalidInput = (inputList) => {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
+};
+
 const checkInputValidity = (formElement, inputElement) => {
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage);
@@ -47,17 +63,4 @@ const enableValidation = () => {
   });
 };
 
-const hasInvalidInput = (inputList) => {
-  return inputList.some((inputElement) => {
-    return !inputElement.validity.valid;
-  });
-};
-
-const toggleButtonState = (inputList, buttonElement) => {
-  if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add('form__save-button_disabled');
-  } else {
-    buttonElement.classList.remove('form__save-button_disabled');
-  }
-};
 enableValidation();

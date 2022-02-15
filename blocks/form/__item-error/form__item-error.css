@@ -1,6 +1,4 @@
 .form__item-error {
-  position: absolute;
-  top: calc(100% + 5px);
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
