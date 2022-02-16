@@ -3,5 +3,6 @@ text.txt
 .DS_Store
 .vscode
 .idea
+.prettierrc
 node_modules
 dist

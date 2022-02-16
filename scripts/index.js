@@ -72,18 +72,16 @@ function overlayClick(evt) {
 }
 
 function submitEditorForm(evt) {
-  evt.preventDefault();
+  // evt.preventDefault();
   userName.textContent = nameInput.value; // Значение value поля ввода === текстовому содержимому тега на странице
   userDescription.textContent = descriptionInput.value; // Аналогично верхнему
   closePopup(editorPopup);
 } // Форма редактирования профиля
 
 function submitAdderForm(evt) {
-  evt.preventDefault();
+  // evt.preventDefault();
 
-  galleryContainer.prepend(
-    createCard(placeNameInput.value, placeLinkInput.value)
-  ); // Отправляю value импутов в качестве параметров фунции, создаю карточку, кладу в начало списка
+  galleryContainer.prepend(createCard(placeNameInput.value, placeLinkInput.value)); // Отправляю value импутов в качестве параметров фунции, создаю карточку, кладу в начало списка
 
   // Делаю импуты пустыми после закрытия
   cardsForm.reset();
