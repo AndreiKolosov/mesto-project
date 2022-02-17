@@ -1,13 +1,37 @@
 import { closePopup } from '../components/utils.js';
 import { enableValidation, validationConfig } from '../components/validate.js';
 import { newCards } from '../components/cards.js';
-import { openProfileEditor, openCardCreator, submitAdderForm, submitEditorForm } from '../components/modal.js';
+import {
+  openProfileEditor,
+  openCardCreator,
+  editorPopup,
+  cardAdderPopup,
+  userName,
+  nameInput,
+  userDescription,
+  descriptionInput,
+  placeNameInput,
+  placeLinkInput,
+} from '../components/modal.js';
 
 const editBtn = document.querySelector('.profile__edit-button'); // Кнопка редактирования профиля
 const addBtn = document.querySelector('.profile__add-button'); // Кнопка добавления карточки
 const editorForm = document.querySelector('#editor-form'); // Форма редактирования
 const cardsForm = document.querySelector('#adder-form'); // Форма добавления карточки
 const galleryContainer = document.querySelector('.galery__list'); // Контейнер карточек
+
+function submitEditorForm(evt) {
+  userName.textContent = nameInput.value; // Значение value поля ввода === текстовому содержимому тега на странице
+  userDescription.textContent = descriptionInput.value; // Аналогично верхнему
+  closePopup(editorPopup);
+} // Форма редактирования профиля
+
+function submitAdderForm(evt) {
+  galleryContainer.prepend(createCard(placeNameInput.value, placeLinkInput.value)); // Отправляю value импутов в качестве параметров фунции, создаю карточку, кладу в начало списка
+  // Делаю импуты пустыми после закрытия
+  cardsForm.reset();
+  closePopup(cardAdderPopup);
+}
 
 const popups = Array.from(document.querySelectorAll('.popup')).forEach((element) => {
   element.addEventListener('click', (evt) => {

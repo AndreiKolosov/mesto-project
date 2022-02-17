@@ -1,4 +1,4 @@
-import { openPopup, closePopup } from '../components/utils.js';
+import { openPopup } from '../components/utils.js';
 
 const photoSizeBig = document.querySelector('.popup__image'); // Фото в модальном окне
 const photoCaption = document.querySelector('.popup__img-caption'); // Подпись к фото в модальном окне
@@ -30,17 +30,5 @@ function expendPhoto(evt) {
   photoCaption.textContent = image.alt;
 } // Развернуть окно просмотра карточки
 
-function submitEditorForm(evt) {
-  userName.textContent = nameInput.value; // Значение value поля ввода === текстовому содержимому тега на странице
-  userDescription.textContent = descriptionInput.value; // Аналогично верхнему
-  closePopup(editorPopup);
-} // Форма редактирования профиля
-
-function submitAdderForm(evt) {
-  galleryContainer.prepend(createCard(placeNameInput.value, placeLinkInput.value)); // Отправляю value импутов в качестве параметров фунции, создаю карточку, кладу в начало списка
-  // Делаю импуты пустыми после закрытия
-  cardsForm.reset();
-  closePopup(cardAdderPopup);
-}
-
-export { expendPhoto, openProfileEditor, openCardCreator, submitAdderForm, submitEditorForm };
+export { userName, nameInput, userDescription, descriptionInput, placeNameInput, placeLinkInput }; // переменные
+export { expendPhoto, openProfileEditor, openCardCreator, editorPopup, cardAdderPopup }; // функции
