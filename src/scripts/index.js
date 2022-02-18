@@ -1,18 +1,8 @@
-import { closePopup } from '../components/utils.js';
+import '../pages/index.css';
+import { closePopup, placeNameInput, placeLinkInput } from '../components/utils.js';
 import { enableValidation, validationConfig } from '../components/validate.js';
 import { newCards } from '../components/cards.js';
-import {
-  openProfileEditor,
-  openCardCreator,
-  editorPopup,
-  cardAdderPopup,
-  userName,
-  nameInput,
-  userDescription,
-  descriptionInput,
-  placeNameInput,
-  placeLinkInput,
-} from '../components/modal.js';
+import { openProfileEditor, openCardCreator, editorPopup, cardAdderPopup } from '../components/modal.js';
 
 const editBtn = document.querySelector('.profile__edit-button'); // Кнопка редактирования профиля
 const addBtn = document.querySelector('.profile__add-button'); // Кнопка добавления карточки
