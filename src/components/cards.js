@@ -59,4 +59,4 @@ const newCards = initialCards.map(function (place) {
   return createCard(place.name, place.link); // На каждой итерации из массива берется объект и его ключи отправляются в функцию создания карточки и кладу в новый массив
 }); // Перебираю массив
 
-export { newCards };
+export { newCards, createCard };

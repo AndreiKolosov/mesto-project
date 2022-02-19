@@ -1,7 +1,15 @@
 import '../pages/index.css';
-import { closePopup, placeNameInput, placeLinkInput } from '../components/utils.js';
+import { closePopup } from '../components/utils.js';
+import {
+  userName,
+  nameInput,
+  userDescription,
+  descriptionInput,
+  placeNameInput,
+  placeLinkInput,
+} from '../components/variables.js';
 import { enableValidation, validationConfig } from '../components/validate.js';
-import { newCards } from '../components/cards.js';
+import { newCards, createCard } from '../components/cards.js';
 import { openProfileEditor, openCardCreator, editorPopup, cardAdderPopup } from '../components/modal.js';
 
 const editBtn = document.querySelector('.profile__edit-button'); // Кнопка редактирования профиля
