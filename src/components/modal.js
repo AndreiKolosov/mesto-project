@@ -1,5 +1,5 @@
-import { openPopup, userName, nameInput, userDescription, descriptionInput } from '../components/utils.js';
-
+import { openPopup } from '../components/utils.js';
+import { nameInput, userName, userDescription, descriptionInput } from '../components/variables.js';
 const photoSizeBig = document.querySelector('.popup__image'); // Фото в модальном окне
 const photoCaption = document.querySelector('.popup__img-caption'); // Подпись к фото в модальном окне
 const imagePopup = document.querySelector('.popup_type_img'); // Окно просмотра фотографии
