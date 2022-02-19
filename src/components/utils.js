@@ -16,8 +16,8 @@ function closePopup(popup) {
 } // Функция закрытия модального окна
 
 function pressEsc(evt) {
-  const activePopup = document.querySelector('.popup_opened');
   if (evt.key === 'Escape') {
+    const activePopup = document.querySelector('.popup_opened');
     closePopup(activePopup);
   }
 }
