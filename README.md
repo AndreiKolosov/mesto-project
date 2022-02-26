@@ -1,22 +1,23 @@
-# Проект: Место
+# <a id="top" />Проект: Место
 
-### Содержание
+![Картинка](Картинка-url)
 
-- GitHub Pages
-- Описание
-- Что использовал
-- Автор
+---
 
-## GitHub Pages
+### Оглавление
 
-Посмотреть проект можно [&rarr; ЗДЕСЬ &larr;](https://andreikolosov.github.io/mesto-project/index.html)
+- [Описание](#description)
+- [Ссылки](#references)
+- [Автор проекта](#author)
 
-## Описание
+---
+
+## <a id="description" />Описание
 
 Учебный проект в рамках курса "Веб-разработчик" Яндекс Практикума.
 Сервис хранения и просмотра фотографий.
 
-## Что использовал
+#### Технологии
 
 - БЭМ
 - HTML
@@ -29,6 +30,23 @@
 - Webpack
 - Babel
 
-## Автор
+[Наверх](#top)
+
+---
+
+## <a id="references" />Ссылки
+
+Посмотреть проект можно [&rarr; ЗДЕСЬ &larr;](https://andreikolosov.github.io/mesto-project/index.html)
+
+[Наверх](#top)
+
+---
+
+## <a id="author" />Автор
 
 Андрей Колосов 2021г
+
+- [Telegram ](https://t.me/RustyVoid)
+- [Instagram](https://www.instagram.com/akolosof/)
+
+[Наверх](#top)
