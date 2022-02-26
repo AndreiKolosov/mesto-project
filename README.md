@@ -1,7 +1,5 @@
 # <a id="top" />Проект: Место
 
-![Картинка](Картинка-url)
-
 ---
 
 ### Оглавление
@@ -36,7 +34,7 @@
 
 ## <a id="references" />Ссылки
 
-Посмотреть проект можно [&rarr; ЗДЕСЬ &larr;](https://andreikolosov.github.io/mesto-project/index.html)
+Посмотреть проект можно [&rarr; ЗДЕСЬ &larr;](https://andreikolosov.github.io/mesto-project/)
 
 [Наверх](#top)
 
