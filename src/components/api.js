@@ -6,27 +6,34 @@ const config = {
   },
 };
 
-function responseHandler(res) {
+const parseResponse = (res) => {
   if (res.ok) {
     return res.json();
   }
+
   return Promise.reject(`Ошибка: ${res.status}`);
-}
+};
 
-function errorHendler(err) {
-  console.log(err);
-}
-
-function getUser() {
-  return fetch(`${config.baseUrl}/users/me`, {
-    headers: config.headers,
-  }).then(responseHandler);
-}
-
-function getCards() {
+const getCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers,
-  }).then(responseHandler);
-}
+  })
+    .then((res) => parseResponse(res))
+    .catch((err) => {
+      console.log(err);
+      return Promise.reject(err);
+    });
+};
 
-export default { getCards, getUser, errorHendler };
+const getUser = () => {
+  return fetch(`${config.baseUrl}/users/me`, {
+    headers: config.headers,
+  })
+    .then((res) => parseResponse(res))
+    .catch((err) => {
+      console.log(err);
+      return Promise.reject(err);
+    });
+};
+
+export default { getCards, getUser };

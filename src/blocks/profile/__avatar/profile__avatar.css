@@ -1,5 +1,9 @@
 .profile__avatar {
+  background-image: url(../../../images/profile-Jacques/avatar/avatar.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
   border-radius: 50%;
-  max-width: 120px;
-  max-height: 120px;
+  width: 120px;
+  height: 120px;
 }

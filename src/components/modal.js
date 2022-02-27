@@ -1,5 +1,18 @@
 import { openPopup } from '../components/utils.js';
-import { nameInput, userName, userDescription, descriptionInput } from '../components/variables.js';
+import { createCardElement } from './cards.js';
+import {
+  nameInput,
+  userName,
+  userDescription,
+  descriptionInput,
+  galleryContainer,
+  cardsForm,
+  placeNameInput,
+  placeLinkInput,
+} from '../components/variables.js';
+import { disableButton, validationConfig } from './validate.js';
+import { closePopup } from '../components/utils.js';
+
 const photoSizeBig = document.querySelector('.popup__image'); // Фото в модальном окне
 const photoCaption = document.querySelector('.popup__img-caption'); // Подпись к фото в модальном окне
 const imagePopup = document.querySelector('.popup_type_img'); // Окно просмотра фотографии
@@ -24,4 +37,28 @@ function expendPhoto(evt) {
   photoCaption.textContent = image.alt;
 } // Развернуть окно просмотра карточки
 
-export { expendPhoto, openProfileEditor, openCardCreator, editorPopup, cardAdderPopup };
+function editorFormHandler(evt) {
+  evt.preventDefault();
+  userName.textContent = nameInput.value;
+  userDescription.textContent = descriptionInput.value;
+  closePopup(editorPopup);
+}
+
+function cardFormHandler(evt) {
+  evt.preventDefault();
+  const createBtn = cardsForm.querySelector('.form__save-button');
+  galleryContainer.prepend(createCardElement(placeNameInput.value, placeLinkInput.value));
+  cardsForm.reset();
+  disableButton(createBtn, validationConfig);
+  closePopup(cardAdderPopup);
+}
+
+export {
+  expendPhoto,
+  openProfileEditor,
+  openCardCreator,
+  editorPopup,
+  cardAdderPopup,
+  editorFormHandler,
+  cardFormHandler,
+};
