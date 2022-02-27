@@ -1,4 +1,4 @@
-import { openPopup } from '../components/utils.js';
+import { openPopup, closePopup } from '../components/utils.js';
 import { createCardElement } from './cards.js';
 import {
   nameInput,
@@ -6,27 +6,35 @@ import {
   userDescription,
   descriptionInput,
   galleryContainer,
+  userInfEditorForm,
   cardsForm,
+  avatarForm,
   placeNameInput,
   placeLinkInput,
+  avatarLinkInput,
+  userAvatar,
 } from '../components/variables.js';
 import { disableButton, validationConfig } from './validate.js';
-import { closePopup } from '../components/utils.js';
 
 const photoSizeBig = document.querySelector('.popup__image'); // Фото в модальном окне
 const photoCaption = document.querySelector('.popup__img-caption'); // Подпись к фото в модальном окне
 const imagePopup = document.querySelector('.popup_type_img'); // Окно просмотра фотографии
 const cardAdderPopup = document.querySelector('.popup_type_card_adder'); // Окно добавления карточки
-const editorPopup = document.querySelector('.popup_type_profile-editor'); // Окно редактирования профиля
+const userInfEditorPopup = document.querySelector('.popup_type_profile-editor'); // Окно редактирования профиля
+const avatarEditorPopup = document.querySelector('.popup_type_avatar-editor'); // Окно редактирования профиля
 
 function openProfileEditor() {
   nameInput.value = userName.textContent;
   descriptionInput.value = userDescription.textContent;
-  openPopup(editorPopup);
+  openPopup(userInfEditorPopup);
 }
 
 function openCardCreator() {
   openPopup(cardAdderPopup);
+}
+
+function openAvatarEditor() {
+  openPopup(avatarEditorPopup);
 }
 
 function expendPhoto(evt) {
@@ -37,15 +45,25 @@ function expendPhoto(evt) {
   photoCaption.textContent = image.alt;
 } // Развернуть окно просмотра карточки
 
-function editorFormHandler(evt) {
-  evt.preventDefault();
+//   Убрал evt.prevetDefault из функций-обработчиков форм потому-что при включении
+// валидации отменяется стандартная отправка всех форм
+function userFormHandler() {
+  const createBtn = userInfEditorForm.querySelector('.form__save-button');
+  disableButton(createBtn, validationConfig);
   userName.textContent = nameInput.value;
   userDescription.textContent = descriptionInput.value;
-  closePopup(editorPopup);
+  disableButton(createBtn, validationConfig);
+  closePopup(userInfEditorPopup);
 }
 
-function cardFormHandler(evt) {
-  evt.preventDefault();
+function avatarFormHandler() {
+  const createBtn = avatarForm.querySelector('.form__save-button');
+  userAvatar.style.backgroundImage = `url(${avatarLinkInput.value})`;
+  disableButton(createBtn, validationConfig);
+  closePopup(avatarEditorPopup);
+}
+
+function cardFormHandler() {
   const createBtn = cardsForm.querySelector('.form__save-button');
   galleryContainer.prepend(createCardElement(placeNameInput.value, placeLinkInput.value));
   cardsForm.reset();
@@ -56,9 +74,9 @@ function cardFormHandler(evt) {
 export {
   expendPhoto,
   openProfileEditor,
+  openAvatarEditor,
   openCardCreator,
-  editorPopup,
-  cardAdderPopup,
-  editorFormHandler,
+  userFormHandler,
   cardFormHandler,
+  avatarFormHandler,
 };

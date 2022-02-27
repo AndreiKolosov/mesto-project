@@ -2,7 +2,7 @@
   background-image: url(../../../images/profile-Jacques/avatar/avatar.jpg);
   background-position: center;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   border-radius: 50%;
   width: 120px;
   height: 120px;

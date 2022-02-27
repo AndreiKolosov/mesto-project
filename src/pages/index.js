@@ -5,21 +5,22 @@ import { closePopup } from '../components/utils';
 import {
   galleryContainer,
   cardsForm,
-  editBtn,
-  addBtn,
-  editorForm,
+  userInfEditorForm,
+  avatarForm,
 } from '../components/variables.js';
 import {
   openProfileEditor,
   openCardCreator,
-  editorFormHandler,
+  openAvatarEditor,
+  userFormHandler,
   cardFormHandler,
+  avatarFormHandler,
 } from '../components/modal.js';
 import API from '../components/api.js';
 
-API.getCards()
-  .then((rawCards) => prepereCards(rawCards))
-  .then((markedCards) => renderCards(markedCards, galleryContainer));
+const editBtn = document.querySelector('.profile__edit-button'); // Кнопка редактирования профиля
+const addBtn = document.querySelector('.profile__add-button'); // Кнопка добавления карточки
+const changeAvatarBtn = document.querySelector('.profile__change-ava-btn'); // Кнопка смены аватара
 
 const popups = Array.from(document.querySelectorAll('.popup')).forEach((element) => {
   element.addEventListener('click', (evt) => {
@@ -32,8 +33,14 @@ const popups = Array.from(document.querySelectorAll('.popup')).forEach((element)
   });
 });
 
-editBtn.addEventListener('click', openProfileEditor); // Отслеживаю клик по кнопке редактирования
-addBtn.addEventListener('click', openCardCreator); // Отслеживаю клик по кнопки добавления
-editorForm.addEventListener('submit', editorFormHandler); // Сабмит формы редактирования
-cardsForm.addEventListener('submit', cardFormHandler); // Сабмит формы добавления
+API.getCards()
+  .then((rawCards) => prepereCards(rawCards))
+  .then((markedCards) => renderCards(markedCards, galleryContainer));
+
+changeAvatarBtn.addEventListener('click', openAvatarEditor);
+editBtn.addEventListener('click', openProfileEditor);
+addBtn.addEventListener('click', openCardCreator);
+userInfEditorForm.addEventListener('submit', userFormHandler);
+cardsForm.addEventListener('submit', cardFormHandler);
+avatarForm.addEventListener('submit', avatarFormHandler);
 enableValidation(validationConfig);

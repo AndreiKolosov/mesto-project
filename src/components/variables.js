@@ -1,14 +1,15 @@
 const userName = document.querySelector('.profile__name'); // Имя пользователя на странице
 const userDescription = document.querySelector('.profile__description'); // Описание пользователя на странице
-const nameInput = document.querySelector('#user-name'); // Поле ввода имени
-const descriptionInput = document.querySelector('#user-description'); // Поле ввода описания
-const placeNameInput = document.querySelector('#place-name'); // Поле ввода имени карточки
-const placeLinkInput = document.querySelector('#place-img-link'); // Поле ввода ссылки на фотографию
-const galleryContainer = document.querySelector('.galery__list'); // Контейнер карточек
+const userAvatar = document.querySelector('.profile__avatar');
+const userInfEditorForm = document.querySelector('#editor-form'); // Форма редактирования информации о пользователе
 const cardsForm = document.querySelector('#card-form'); // Форма добавления карточки
-const editBtn = document.querySelector('.profile__edit-button'); // Кнопка редактирования профиля
-const addBtn = document.querySelector('.profile__add-button'); // Кнопка добавления карточки
-const editorForm = document.querySelector('#editor-form'); // Форма редактирования
+const avatarForm = document.querySelector('#avatar-form'); // форма смены аватара
+const nameInput = userInfEditorForm.querySelector('#user-name'); // Поле ввода имени
+const descriptionInput = userInfEditorForm.querySelector('#user-description'); // Поле ввода описания
+const placeNameInput = cardsForm.querySelector('#place-name'); // Поле ввода имени карточки
+const placeLinkInput = cardsForm.querySelector('#place-img-link'); // Поле ввода ссылки на фотографию
+const avatarLinkInput = avatarForm.querySelector('#user-avatar');
+const galleryContainer = document.querySelector('.galery__list'); // Контейнер карточек
 
 export {
   userName,
@@ -19,7 +20,8 @@ export {
   placeLinkInput,
   galleryContainer,
   cardsForm,
-  editBtn,
-  addBtn,
-  editorForm,
+  userInfEditorForm,
+  avatarForm,
+  avatarLinkInput,
+  userAvatar,
 };
