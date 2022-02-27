@@ -1,5 +1,7 @@
 import '../pages/index.css';
 import { closePopup } from '../components/utils.js';
+import { enableValidation, validationConfig, disableButton } from '../components/validate.js';
+import { renderCards, createCard } from '../components/cards.js';
 import {
   userName,
   nameInput,
@@ -7,9 +9,8 @@ import {
   descriptionInput,
   placeNameInput,
   placeLinkInput,
+  galleryContainer,
 } from '../components/variables.js';
-import { enableValidation, validationConfig, disableButton } from '../components/validate.js';
-import { newCards, createCard } from '../components/cards.js';
 import {
   openProfileEditor,
   openCardCreator,
@@ -21,7 +22,6 @@ const editBtn = document.querySelector('.profile__edit-button'); // Кнопка
 const addBtn = document.querySelector('.profile__add-button'); // Кнопка добавления карточки
 const editorForm = document.querySelector('#editor-form'); // Форма редактирования
 const cardsForm = document.querySelector('#adder-form'); // Форма добавления карточки
-const galleryContainer = document.querySelector('.galery__list'); // Контейнер карточек
 
 function editorFormHandler(evt) {
   evt.preventDefault();
@@ -49,8 +49,7 @@ const popups = Array.from(document.querySelectorAll('.popup')).forEach((element)
     }
   });
 });
-
-galleryContainer.append(...newCards); // Вставляю карточки спредом
+renderCards();
 editBtn.addEventListener('click', openProfileEditor); // Отслеживаю клик по кнопке редактирования
 addBtn.addEventListener('click', openCardCreator); // Отслеживаю клик по кнопки добавления
 editorForm.addEventListener('submit', editorFormHandler); // Сабмит формы редактирования

@@ -4,5 +4,14 @@ const nameInput = document.querySelector('#user-name'); // Поле ввода �
 const descriptionInput = document.querySelector('#user-description'); // Поле ввода описания
 const placeNameInput = document.querySelector('#place-name'); // Поле ввода имени карточки
 const placeLinkInput = document.querySelector('#place-img-link'); // Поле ввода ссылки на фотографию
+const galleryContainer = document.querySelector('.galery__list'); // Контейнер карточек
 
-export { userName, nameInput, userDescription, descriptionInput, placeNameInput, placeLinkInput };
+export {
+  userName,
+  nameInput,
+  userDescription,
+  descriptionInput,
+  placeNameInput,
+  placeLinkInput,
+  galleryContainer,
+};

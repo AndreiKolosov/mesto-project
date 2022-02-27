@@ -28,3 +28,5 @@ function getCards() {
     headers: config.headers,
   }).then(responseHandler);
 }
+
+export default { getCards, getUser, errorHendler };
