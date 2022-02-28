@@ -8,11 +8,11 @@ import {
   galleryContainer,
   userInfEditorForm,
   cardsForm,
-  avatarForm,
+  // avatarForm,
   placeNameInput,
   placeLinkInput,
-  avatarLinkInput,
-  userAvatar,
+  // avatarLinkInput,
+  // userAvatar,
 } from '../components/variables.js';
 import { disableButton, validationConfig } from './validate.js';
 
@@ -56,12 +56,12 @@ function userFormHandler() {
   closePopup(userInfEditorPopup);
 }
 
-function avatarFormHandler() {
-  const createBtn = avatarForm.querySelector('.form__save-button');
-  userAvatar.style.backgroundImage = `url(${avatarLinkInput.value})`;
-  disableButton(createBtn, validationConfig);
-  closePopup(avatarEditorPopup);
-}
+// function avatarFormHandler() {
+//   const createBtn = avatarForm.querySelector('.form__save-button');
+//   userAvatar.style.backgroundImage = `url(${avatarLinkInput.value})`;
+//   disableButton(createBtn, validationConfig);
+//   closePopup(avatarEditorPopup);
+// }
 
 function cardFormHandler() {
   const createBtn = cardsForm.querySelector('.form__save-button');
@@ -78,5 +78,5 @@ export {
   openCardCreator,
   userFormHandler,
   cardFormHandler,
-  avatarFormHandler,
+  // avatarFormHandler,
 };

@@ -14,13 +14,13 @@ import {
   openAvatarEditor,
   userFormHandler,
   cardFormHandler,
-  avatarFormHandler,
+  // avatarFormHandler,
 } from '../components/modal.js';
 import API from '../components/api.js';
 
 const editBtn = document.querySelector('.profile__edit-button'); // Кнопка редактирования профиля
 const addBtn = document.querySelector('.profile__add-button'); // Кнопка добавления карточки
-const changeAvatarBtn = document.querySelector('.profile__change-ava-btn'); // Кнопка смены аватара
+// const changeAvatarBtn = document.querySelector('.profile__change-ava-btn'); // Кнопка смены аватара
 
 const popups = Array.from(document.querySelectorAll('.popup')).forEach((element) => {
   element.addEventListener('click', (evt) => {
@@ -37,10 +37,10 @@ API.getCards()
   .then((rawCards) => prepereCards(rawCards))
   .then((markedCards) => renderCards(markedCards, galleryContainer));
 
-changeAvatarBtn.addEventListener('click', openAvatarEditor);
+// changeAvatarBtn.addEventListener('click', openAvatarEditor);
 editBtn.addEventListener('click', openProfileEditor);
 addBtn.addEventListener('click', openCardCreator);
 userInfEditorForm.addEventListener('submit', userFormHandler);
 cardsForm.addEventListener('submit', cardFormHandler);
-avatarForm.addEventListener('submit', avatarFormHandler);
+// avatarForm.addEventListener('submit', avatarFormHandler);
 enableValidation(validationConfig);
