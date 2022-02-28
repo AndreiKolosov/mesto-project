@@ -28,15 +28,11 @@ function createCardElement(name, link) {
   return cardMarkup;
 }
 
-function prepereCards(rawCards) {
-  const markedCards = rawCards.map((card) => {
-    return createCardElement(card.name, card.link);
-  });
-  return markedCards;
-}
-
 function renderCards(cards, container) {
-  container.append(...cards);
+  cards.forEach((card) => {
+    const markedCard = createCardElement(card.name, card.link);
+    container.append(markedCard);
+  });
 }
 
-export { prepereCards, renderCards, createCardElement };
+export { renderCards, createCardElement };
