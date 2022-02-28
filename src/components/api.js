@@ -36,4 +36,34 @@ const getUser = () => {
     });
 };
 
-export default { getCards, getUser };
+const updateAvatar = (avatar) => {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
+    method: 'PATCH',
+    headers: config.headers,
+    body: JSON.stringify({
+      avatar,
+    }),
+  })
+    .then((res) => parseResponse(res))
+    .catch((err) => {
+      console.log(err);
+      return Promise.reject(err);
+    });
+};
+
+const updateUser = (name, about) => {
+  return fetch(`${config.baseUrl}/users/me`, {
+    method: 'PATCH',
+    headers: config.headers,
+    body: JSON.stringify({
+      name,
+      about,
+    }),
+  })
+    .then((res) => parseResponse(res))
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export default { getUser, getCards, updateAvatar, updateUser };

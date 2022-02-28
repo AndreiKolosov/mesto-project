@@ -15,6 +15,7 @@ import {
   userAvatar,
 } from '../components/variables.js';
 import { disableButton, validationConfig } from './validate.js';
+import API from './api.js';
 
 const photoSizeBig = document.querySelector('.popup__image'); // Фото в модальном окне
 const photoCaption = document.querySelector('.popup__img-caption'); // Подпись к фото в модальном окне
@@ -49,19 +50,30 @@ function expendPhoto(evt) {
 // валидации отменяется стандартная отправка всех форм
 function userFormHandler() {
   const createBtn = userInfoForm.querySelector('.form__save-button');
-  disableButton(createBtn, validationConfig);
-  userName.textContent = nameInput.value;
-  userDescription.textContent = descriptionInput.value;
-  disableButton(createBtn, validationConfig);
-  closePopup(userInfEditorPopup);
+  API.updateUser(nameInput.value, descriptionInput.value)
+    .then((res) => {
+      userName.textContent = res.name;
+      userDescription.textContent = res.about;
+      disableButton(createBtn, validationConfig);
+      closePopup(userInfEditorPopup);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function avatarFormHandler() {
   const createBtn = avatarForm.querySelector('.form__save-button');
-  userAvatar.src = avatarLinkInput.value;
-  avatarForm.reset();
-  disableButton(createBtn, validationConfig);
-  closePopup(avatarEditorPopup);
+  API.updateAvatar(avatarLinkInput.value)
+    .then((data) => {
+      userAvatar.src = data.avatar;
+      avatarForm.reset();
+      disableButton(createBtn, validationConfig);
+      closePopup(avatarEditorPopup);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function cardFormHandler() {
