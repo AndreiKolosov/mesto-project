@@ -6,13 +6,13 @@ import {
   userDescription,
   descriptionInput,
   galleryContainer,
-  userInfEditorForm,
+  userInfoForm,
   cardsForm,
-  // avatarForm,
+  avatarForm,
   placeNameInput,
   placeLinkInput,
-  // avatarLinkInput,
-  // userAvatar,
+  avatarLinkInput,
+  userAvatar,
 } from '../components/variables.js';
 import { disableButton, validationConfig } from './validate.js';
 
@@ -48,7 +48,7 @@ function expendPhoto(evt) {
 //   Убрал evt.prevetDefault из функций-обработчиков форм потому-что при включении
 // валидации отменяется стандартная отправка всех форм
 function userFormHandler() {
-  const createBtn = userInfEditorForm.querySelector('.form__save-button');
+  const createBtn = userInfoForm.querySelector('.form__save-button');
   disableButton(createBtn, validationConfig);
   userName.textContent = nameInput.value;
   userDescription.textContent = descriptionInput.value;
@@ -56,12 +56,13 @@ function userFormHandler() {
   closePopup(userInfEditorPopup);
 }
 
-// function avatarFormHandler() {
-//   const createBtn = avatarForm.querySelector('.form__save-button');
-//   userAvatar.style.backgroundImage = `url(${avatarLinkInput.value})`;
-//   disableButton(createBtn, validationConfig);
-//   closePopup(avatarEditorPopup);
-// }
+function avatarFormHandler() {
+  const createBtn = avatarForm.querySelector('.form__save-button');
+  userAvatar.src = avatarLinkInput.value;
+  avatarForm.reset();
+  disableButton(createBtn, validationConfig);
+  closePopup(avatarEditorPopup);
+}
 
 function cardFormHandler() {
   const createBtn = cardsForm.querySelector('.form__save-button');
@@ -78,5 +79,5 @@ export {
   openCardCreator,
   userFormHandler,
   cardFormHandler,
-  // avatarFormHandler,
+  avatarFormHandler,
 };
