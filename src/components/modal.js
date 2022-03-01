@@ -20,7 +20,7 @@ import API from './api.js';
 const photoSizeBig = document.querySelector('.popup__image'); // Фото в модальном окне
 const photoCaption = document.querySelector('.popup__img-caption'); // Подпись к фото в модальном окне
 const imagePopup = document.querySelector('.popup_type_img'); // Окно просмотра фотографии
-const cardAdderPopup = document.querySelector('.popup_type_card_adder'); // Окно добавления карточки
+const cardAdderPopup = document.querySelector('.popup_type_card-adder'); // Окно добавления карточки
 const userInfEditorPopup = document.querySelector('.popup_type_profile-editor'); // Окно редактирования профиля
 const avatarEditorPopup = document.querySelector('.popup_type_avatar-editor'); // Окно редактирования профиля
 
