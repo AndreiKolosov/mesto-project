@@ -2,6 +2,7 @@
   background-image: url(../../../images/buttons/trash-btn.svg);
   background-size: contain;
   background-repeat: no-repeat;
+  background-color: transparent;
   min-width: 18px;
   min-height: 19px;
   z-index: 2;

@@ -60,7 +60,7 @@
         <form class="form" id="avatar-form">
           <h2 class="form__heading">Обновить аватар</h2>
           <fieldset class="form__input-container form__new-place">
-            <input type="url" class="form__item" name="user-avatar" placeholder="Ссылка на картинку" value="" id="user-avatar" required>
+            <input type="url" class="form__item" name="user-avatar" placeholder="Ссылка на новый аватар" value="" id="user-avatar" required>
             <span class="form__item-error user-avatar_error"></span>
             <button type="submit" class="page__button form__save-button">Сохранить</button>
           </fieldset>
@@ -77,7 +77,7 @@
             <input type="text" class="form__item" name="place-name" placeholder="Название" required value="" id="place-name" required minlength="2"
               maxlength="30">
             <span class="form__item-error place-name_error"></span>
-            <input type="url" class="form__item" name="place-img-link" placeholder="Ссылка на новый аватар" value="" id="place-img-link" required>
+            <input type="url" class="form__item" name="place-img-link" placeholder="Ссылка на картинку" value="" id="place-img-link" required>
             <span class="form__item-error place-img-link_error"></span>
             <button type="submit" class="page__button form__save-button">Создать</button>
           </fieldset>
@@ -102,9 +102,10 @@
     <li class="card">
       <img class="card__image">
       <button type="button" class="page__button card__trash-button"></button>
-      <div class="card__description">
-        <h2 class="card__name"></h2>
+      <h2 class="card__name"></h2>
+      <div class="card__like-container">
         <button type="button" class="page__button card__like-button"></button>
+        <span class="card__like-counter">2</span>
       </div>
     </li>
   </template>

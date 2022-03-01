@@ -24,7 +24,7 @@ import API from '../components/api.js';
 const editBtn = document.querySelector('.profile__edit-button'); // Кнопка редактирования профиля
 const addBtn = document.querySelector('.profile__add-button'); // Кнопка добавления карточки
 const avatarCangeBtn = document.querySelector('.profile__avatar-container'); // Кнопка смены аватара
-const popups = Array.from(document.querySelectorAll('.popup'));
+const popups = Array.from(document.querySelectorAll('.popup')); // Попапы
 const getUser = API.getUser();
 const getCards = API.getCards();
 const initPromises = [getUser, getCards];

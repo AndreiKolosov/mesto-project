@@ -1,9 +1,10 @@
 .card {
-  max-width: 282px;
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  grid-template-rows: 282px 79px;
+  align-items: center;
   border-radius: 10px;
   overflow: hidden;
-  box-sizing: border-box;
-  line-height: 0;
-  z-index: 1;
+  background-color: #fff;
   position: relative;
 }
