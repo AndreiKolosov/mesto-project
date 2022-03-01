@@ -65,8 +65,8 @@ function userFormHandler() {
 function avatarFormHandler() {
   const createBtn = avatarForm.querySelector('.form__save-button');
   API.updateAvatar(avatarLinkInput.value)
-    .then((data) => {
-      userAvatar.src = data.avatar;
+    .then((res) => {
+      userAvatar.src = res.avatar;
       avatarForm.reset();
       disableButton(createBtn, validationConfig);
       closePopup(avatarEditorPopup);
@@ -78,10 +78,16 @@ function avatarFormHandler() {
 
 function cardFormHandler() {
   const createBtn = cardsForm.querySelector('.form__save-button');
-  galleryContainer.prepend(createCardElement(placeNameInput.value, placeLinkInput.value));
-  cardsForm.reset();
-  disableButton(createBtn, validationConfig);
-  closePopup(cardAdderPopup);
+  API.createCard(placeNameInput.value, placeLinkInput.value)
+    .then((res) => {
+      galleryContainer.prepend(createCardElement(res.name, res.link));
+      cardsForm.reset();
+      disableButton(createBtn, validationConfig);
+      closePopup(cardAdderPopup);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 export {

@@ -66,4 +66,60 @@ const updateUser = (name, about) => {
     });
 };
 
-export default { getUser, getCards, updateAvatar, updateUser };
+const createCard = (name, link) => {
+  return fetch(`${config.baseUrl}/cards`, {
+    method: 'POST',
+    headers: config.headers,
+    body: JSON.stringify({
+      name,
+      link,
+    }),
+  })
+    .then((res) => parseResponse(res))
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const deleteCard = (cardId) => {
+  return fetch(`${config.baseUrl}/cards/${cardId}`, {
+    method: 'DELETE',
+    headers: config.headers,
+  })
+    .then((res) => parseResponse(res))
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const addLike = (cardId) => {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: 'PUT',
+    headers: config.headers,
+  })
+    .then((res) => parseResponse(res))
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const removeLike = (cardId) => {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: 'DELETE',
+    headers: config.headers,
+  })
+    .then((res) => parseResponse(res))
+    .catch((err) => {
+      console.log(err);
+    });
+};
+export default {
+  getUser,
+  getCards,
+  updateAvatar,
+  updateUser,
+  createCard,
+  deleteCard,
+  addLike,
+  removeLike,
+};

@@ -6,9 +6,14 @@ function removeCard(event) {
   event.target.closest('.card').remove();
 } // Удаление карточки
 
-function likeCard() {
-  this.classList.toggle('card__like-button_active');
-} // Лайк
+function addLikeListener(likeBtn) {
+  const card = likeBtn.closest('.card'); // понадобится чтобы брать id
+  const likeCounter = card.querySelector('.card__like-counter');
+
+  likeBtn.addEventListener('click', () => {
+    likeBtn.classList.add('card__like-button_active');
+  });
+}
 
 function createCardElement(name, link) {
   const cardMarkup = cardTemplate.querySelector('.card').cloneNode(true); // Карточка, склонированная из шаблона
@@ -21,7 +26,7 @@ function createCardElement(name, link) {
   cardImg.src = link;
   cardImg.alt = name;
 
-  likeBtn.addEventListener('click', likeCard);
+  addLikeListener(likeBtn);
   removeCardBtn.addEventListener('click', removeCard);
   cardImg.addEventListener('click', expendPhoto);
 
