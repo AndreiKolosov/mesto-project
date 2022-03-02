@@ -23,6 +23,7 @@ const imagePopup = document.querySelector('.popup_type_img'); // Окно про
 const cardAdderPopup = document.querySelector('.popup_type_card-adder'); // Окно добавления карточки
 const userInfEditorPopup = document.querySelector('.popup_type_profile-editor'); // Окно редактирования профиля
 const avatarEditorPopup = document.querySelector('.popup_type_avatar-editor'); // Окно редактирования профиля
+const confirmPopup = document.querySelector('.popup_type_confirm'); // Окно подтверждения действия
 
 function openProfileEditor() {
   nameInput.value = userName.textContent;
@@ -36,6 +37,10 @@ function openCardCreator() {
 
 function openAvatarEditor() {
   openPopup(avatarEditorPopup);
+}
+
+function openConfirmPopup() {
+  openPopup(confirmPopup);
 }
 
 function expendPhoto(evt) {
@@ -84,10 +89,15 @@ function cardFormHandler() {
       cardsForm.reset();
       disableButton(createBtn, validationConfig);
       closePopup(cardAdderPopup);
+      console.log(res);
     })
     .catch((err) => {
       console.log(err);
     });
+}
+
+function removeCardHandler() {
+  console.log();
 }
 
 export {
@@ -95,6 +105,7 @@ export {
   openProfileEditor,
   openAvatarEditor,
   openCardCreator,
+  openConfirmPopup,
   userFormHandler,
   cardFormHandler,
   avatarFormHandler,
