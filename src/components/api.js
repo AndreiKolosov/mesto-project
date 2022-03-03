@@ -113,6 +113,7 @@ const removeLike = (cardId) => {
       console.log(err);
     });
 };
+
 export default {
   getUser,
   getCards,

@@ -51,8 +51,7 @@ Promise.all(initPromises)
   .then((res) => {
     const user = res[0];
     const cards = res[1];
-    console.log(user);
-    console.log(cards);
+
     userName.textContent = user.name;
     userDescription.textContent = user.about;
     userAvatar.src = user.avatar;

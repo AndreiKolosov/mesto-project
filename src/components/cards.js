@@ -1,14 +1,15 @@
 import { expendPhoto, openConfirmPopup } from '../components/modal.js';
-import api from './api.js';
 import API from './api.js';
 
 const myCardTemplate = document.querySelector('.card-template-self').content; // Шаблон карточки
 const cardTemplate = document.querySelector('.card-template').content;
 
-function removeCard(event) {
-  event.target.closest('.card').remove();
+function removeCard(evt) {
+  const card = evt.target.closest('.card');
+  openConfirmPopup(card);
 } // Удаление карточки
 
+// !!! Попробовать вынести функции науржу
 function addLikeListener(btn) {
   const card = btn.closest('.card');
   const likeCounter = card.querySelector('.card__like-counter');
@@ -54,6 +55,10 @@ function createCardElement(card, isMy = true, likedByMe = false) {
   cardImg.src = card.link;
   cardImg.alt = card.name;
 
+  if (isMy) {
+    cardMarkup.querySelector('.card__trash-button').addEventListener('click', removeCard);
+  }
+
   if (card.likes.length > 0) {
     likeCounter.classList.add('card__like-counter_visible');
     likeCounter.textContent = card.likes.length;
@@ -61,10 +66,6 @@ function createCardElement(card, isMy = true, likedByMe = false) {
 
   if (likedByMe) {
     likeBtn.classList.add('card__like-button_active');
-  }
-
-  if (isMy) {
-    cardMarkup.querySelector('.card__trash-button').addEventListener('click', removeCard);
   }
 
   addLikeListener(likeBtn);

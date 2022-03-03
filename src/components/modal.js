@@ -39,8 +39,12 @@ function openAvatarEditor() {
   openPopup(avatarEditorPopup);
 }
 
-function openConfirmPopup() {
+function openConfirmPopup(card) {
   openPopup(confirmPopup);
+  const agreeBtn = confirmPopup.querySelector('.form__save-button');
+  // С помощью bind передал нужные мне аргументы
+  const handler = removeCardHandler.bind(this, card, agreeBtn); // В отдельной переменной чтобы потом удалить листенер
+  agreeBtn.addEventListener('click', handler);
 }
 
 function expendPhoto(evt) {
@@ -85,19 +89,27 @@ function cardFormHandler() {
   const createBtn = cardsForm.querySelector('.form__save-button');
   API.createCard(placeNameInput.value, placeLinkInput.value)
     .then((res) => {
-      galleryContainer.prepend(createCardElement(res.name, res.link));
+      galleryContainer.prepend(createCardElement(res));
       cardsForm.reset();
       disableButton(createBtn, validationConfig);
       closePopup(cardAdderPopup);
-      console.log(res);
     })
     .catch((err) => {
       console.log(err);
     });
 }
 
-function removeCardHandler() {
-  console.log();
+function removeCardHandler(card, agreeBtn, handler) {
+  API.deleteCard(card.id)
+    .then((res) => {
+      card.remove();
+      agreeBtn.removeEventListener('click', handler);
+      closePopup(confirmPopup);
+      console.log(res.message);
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 }
 
 export {
