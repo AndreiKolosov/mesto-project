@@ -39,9 +39,11 @@ function openAvatarEditor() {
   openPopup(avatarEditorPopup);
 }
 
-function openConfirmPopup(card) {
+function openConfirmPopup(evt) {
   openPopup(confirmPopup);
+  const card = evt.target.closest('.card');
   const agreeBtn = confirmPopup.querySelector('.form__save-button');
+  console.log(card.id);
   // С помощью bind передал нужные мне аргументы
   const handler = removeCardHandler.bind(this, card, agreeBtn); // В отдельной переменной чтобы потом удалить листенер
   agreeBtn.addEventListener('click', handler);
@@ -89,7 +91,7 @@ function cardFormHandler() {
   const createBtn = cardsForm.querySelector('.form__save-button');
   API.createCard(placeNameInput.value, placeLinkInput.value)
     .then((res) => {
-      galleryContainer.prepend(createCardElement(res));
+      galleryContainer.prepend(createCardElement(res, res.owner._id));
       cardsForm.reset();
       disableButton(createBtn, validationConfig);
       closePopup(cardAdderPopup);
@@ -101,11 +103,10 @@ function cardFormHandler() {
 
 function removeCardHandler(card, agreeBtn, handler) {
   API.deleteCard(card.id)
-    .then((res) => {
-      card.remove();
+    .then(() => {
       agreeBtn.removeEventListener('click', handler);
+      card.remove();
       closePopup(confirmPopup);
-      console.log(res.message);
     })
     .catch((err) => {
       console.log(err.message);

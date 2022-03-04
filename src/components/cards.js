@@ -1,13 +1,19 @@
 import { expendPhoto, openConfirmPopup } from '../components/modal.js';
 import API from './api.js';
 
-const myCardTemplate = document.querySelector('.card-template-self').content; // Шаблон карточки
-const cardTemplate = document.querySelector('.card-template').content;
+const cardTemplate = document.querySelector('.card-template').content; // Шаблон карточки
 
-function removeCard(evt) {
-  const card = evt.target.closest('.card');
-  openConfirmPopup(card);
-} // Удаление карточки
+// function removeCard() {
+//   API.deleteCard(card.id)
+//     .then((res) => {
+//       agreeBtn.removeEventListener('click', handler);
+//       card.remove();
+//       closePopup(confirmPopup);
+//     })
+//     .catch((err) => {
+//       console.log(err.message);
+//     });
+// }
 
 // !!! Попробовать вынести функции науржу
 function addLikeListener(btn) {
@@ -18,7 +24,6 @@ function addLikeListener(btn) {
     if (btn.classList.contains('card__like-button_active')) {
       API.removeLike(card.id)
         .then((res) => {
-          console.log(res, 'rem');
           likeCounter.textContent = res.likes.length;
           likeCounter.classList.remove('card__like-counter_visible');
           btn.classList.remove('card__like-button_active');
@@ -29,7 +34,6 @@ function addLikeListener(btn) {
     } else {
       API.addLike(card.id)
         .then((res) => {
-          console.log(res, 'add');
           likeCounter.textContent = res.likes.length;
           likeCounter.classList.add('card__like-counter_visible');
           btn.classList.add('card__like-button_active');
@@ -41,43 +45,45 @@ function addLikeListener(btn) {
   });
 }
 
-function createCardElement(card, isMy = true, likedByMe = false) {
-  const cardMarkup = isMy
-    ? myCardTemplate.querySelector('.card').cloneNode(true)
-    : cardTemplate.querySelector('.card').cloneNode(true);
+// нужен user id
+function createCardElement(card, userId) {
+  const cardMarkup = cardTemplate.querySelector('.card').cloneNode(true);
   const likeBtn = cardMarkup.querySelector('.card__like-button'); // Кнопка лайк
   const cardName = cardMarkup.querySelector('.card__name'); // Элемент с названием карточки
   const cardImg = cardMarkup.querySelector('.card__image'); // Элемент Img в карточке
   const likeCounter = cardMarkup.querySelector('.card__like-counter');
+  const removeBtn = cardMarkup.querySelector('.card__trash-button');
+  const likes = card.likes;
+  const likedByMe = Boolean(likes.find((like) => like._id === userId));
+
+  if (userId !== card.owner._id) {
+    // removeBtn.style.display = 'none';
+    removeBtn.remove();
+  }
+
+  if (card.likes.length > 0) {
+    likeCounter.classList.add('card__like-counter_visible');
+    likeCounter.textContent = card.likes.length;
+    if (likedByMe) {
+      likeBtn.classList.add('card__like-button_active');
+    }
+  }
 
   cardMarkup.id = card._id;
   cardName.textContent = card.name;
   cardImg.src = card.link;
   cardImg.alt = card.name;
 
-  if (isMy) {
-    cardMarkup.querySelector('.card__trash-button').addEventListener('click', removeCard);
-  }
-
-  if (card.likes.length > 0) {
-    likeCounter.classList.add('card__like-counter_visible');
-    likeCounter.textContent = card.likes.length;
-  }
-
-  if (likedByMe) {
-    likeBtn.classList.add('card__like-button_active');
-  }
-
   addLikeListener(likeBtn);
   cardImg.addEventListener('click', expendPhoto);
+  removeBtn.addEventListener('click', openConfirmPopup);
   return cardMarkup;
 }
 
 function renderCards(cards, userId, container) {
   cards.forEach((card) => {
-    const isMy = card.owner._id === userId;
-    const likedByMe = Boolean(card.likes.find((like) => like._id === userId));
-    const markedCard = createCardElement(card, isMy, likedByMe);
+    const markedCard = createCardElement(card, userId);
+
     container.append(markedCard);
   });
 }
