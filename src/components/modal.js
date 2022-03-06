@@ -67,6 +67,7 @@ function expendPhoto(evt) {
 // валидации отменяется стандартная отправка всех форм
 function userFormHandler() {
   const createBtn = userInfoForm.querySelector('.form__save-button');
+  createBtn.textContent = 'Сохранение...';
   API.updateUser(nameInput.value, descriptionInput.value)
     .then((res) => {
       userName.textContent = res.name;
@@ -76,11 +77,15 @@ function userFormHandler() {
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      createBtn.textContent = 'Сохранить';
     });
 }
 
 function avatarFormHandler() {
   const createBtn = avatarForm.querySelector('.form__save-button');
+  createBtn.textContent = 'Сохранение...';
   API.updateAvatar(avatarLinkInput.value)
     .then((res) => {
       userAvatar.src = res.avatar;
@@ -90,11 +95,15 @@ function avatarFormHandler() {
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      createBtn.textContent = 'Сохранить';
     });
 }
 
 function cardFormHandler() {
   const createBtn = cardsForm.querySelector('.form__save-button');
+  createBtn.textContent = 'Сохранение...';
   API.createCard(placeNameInput.value, placeLinkInput.value)
     .then((res) => {
       galleryContainer.prepend(createCardElement(res, res.owner._id));
@@ -104,11 +113,15 @@ function cardFormHandler() {
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      createBtn.textContent = 'Создать';
     });
 }
 
 function removeCardHandler(cardData, handler) {
   const card = document.getElementById(cardData._id);
+  agreeBtn.textContent = 'Удаление...';
   API.deleteCard(cardData._id)
     .then(() => {
       agreeBtn.removeEventListener('click', handler);
@@ -117,6 +130,9 @@ function removeCardHandler(cardData, handler) {
     })
     .catch((err) => {
       console.log(err.message);
+    })
+    .finally(() => {
+      agreeBtn.textContent = 'Да';
     });
 }
 
