@@ -19,7 +19,9 @@
 
     <main class="content">
       <section class="profile" aria-label="Профиль">
-        <img src="<%=require('./images/profile-Jacques/avatar/avatar.jpg')%>" alt="Аватарка профиля" class="profile__avatar">
+        <div class="profile__avatar-container">
+          <img class="profile__avatar" alt="Аватар">
+        </div>
         <div class="profile__info">
           <div class="profile__user">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -52,10 +54,24 @@
       </div>
     </section>
 
-    <section class="popup popup_type_card_adder">
+    <section class="popup popup_type_avatar-editor">
       <div class="popup__container">
         <button type="button" class="page__button popup__close-button"></button>
-        <form class="form" id="adder-form">
+        <form class="form" id="avatar-form">
+          <h2 class="form__heading">Обновить аватар</h2>
+          <fieldset class="form__input-container form__new-place">
+            <input type="url" class="form__item" name="user-avatar" placeholder="Ссылка на новый аватар" value="" id="user-avatar" required>
+            <span class="form__item-error user-avatar_error"></span>
+            <button type="submit" class="page__button form__save-button">Сохранить</button>
+          </fieldset>
+        </form>
+      </div>
+    </section>
+
+    <section class="popup popup_type_card-adder">
+      <div class="popup__container">
+        <button type="button" class="page__button popup__close-button"></button>
+        <form class="form" id="card-form">
           <h2 class="form__heading">Новое место</h2>
           <fieldset class="form__input-container form__new-place">
             <input type="text" class="form__item" name="place-name" placeholder="Название" required value="" id="place-name" required minlength="2"
@@ -77,21 +93,34 @@
       </figure>
     </section>
 
+    <section class="popup popup_type_confirm">
+      <div class="popup__container">
+        <button type="button" class="page__button popup__close-button"></button>
+        <form class="form" id="card-remove">
+          <h2 class="popup__heading">Вы уверены?</h2>
+          <button type="submit" class="page__button form__save-button">Да</button>
+        </form>
+      </div>
+    </section>
+
     <footer class="footer">
       <p class="footer__copyright">&copy;&nbsp;2021 Mesto Russia</p>
     </footer>
   </div>
 
   <template class="card-template">
-    <li class="card">
+    <li class="card" id="">
       <img class="card__image">
-      <button type="button" class="page__button card__trash-button"></button>
-      <div class="card__description">
-        <h2 class="card__name"></h2>
+      <button type="button" class="page__button card__remove-button"></button>
+      <h2 class="card__name"></h2>
+      <div class="card__like-container">
         <button type="button" class="page__button card__like-button"></button>
+        <span class="card__like-counter"></span>
       </div>
     </li>
   </template>
+
+
 
 </body>
 

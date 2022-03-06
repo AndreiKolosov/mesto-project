@@ -1,0 +1,5 @@
+.card__remove-button_invisible {
+  pointer-events: none;
+  user-select: none;
+  visibility: hidden;
+}

@@ -1,45 +1,35 @@
 import '../pages/index.css';
-import { closePopup } from '../components/utils.js';
+import { enableValidation, validationConfig } from '../components/validate.js';
+import { renderCards } from '../components/cards.js';
+import { closePopup } from '../components/utils';
 import {
+  galleryContainer,
+  cardsForm,
+  userInfoForm,
+  avatarForm,
   userName,
-  nameInput,
   userDescription,
-  descriptionInput,
-  placeNameInput,
-  placeLinkInput,
+  userAvatar,
 } from '../components/variables.js';
-import { enableValidation, validationConfig, disableButton } from '../components/validate.js';
-import { newCards, createCard } from '../components/cards.js';
 import {
   openProfileEditor,
   openCardCreator,
-  editorPopup,
-  cardAdderPopup,
+  openAvatarEditor,
+  userFormHandler,
+  cardFormHandler,
+  avatarFormHandler,
 } from '../components/modal.js';
+import API from '../components/api.js';
 
 const editBtn = document.querySelector('.profile__edit-button'); // Кнопка редактирования профиля
 const addBtn = document.querySelector('.profile__add-button'); // Кнопка добавления карточки
-const editorForm = document.querySelector('#editor-form'); // Форма редактирования
-const cardsForm = document.querySelector('#adder-form'); // Форма добавления карточки
-const galleryContainer = document.querySelector('.galery__list'); // Контейнер карточек
+const avatarCangeBtn = document.querySelector('.profile__avatar-container'); // Кнопка смены аватара
+const popups = Array.from(document.querySelectorAll('.popup')); // Попапы
+const getUser = API.getUser();
+const getCards = API.getCards();
+const initPromises = [getUser, getCards];
 
-function editorFormHandler(evt) {
-  evt.preventDefault();
-  userName.textContent = nameInput.value;
-  userDescription.textContent = descriptionInput.value;
-  closePopup(editorPopup);
-}
-
-function cardFormHandler(evt) {
-  evt.preventDefault();
-  const createBtn = cardsForm.querySelector('.form__save-button');
-  galleryContainer.prepend(createCard(placeNameInput.value, placeLinkInput.value));
-  cardsForm.reset();
-  disableButton(createBtn, validationConfig);
-  closePopup(cardAdderPopup);
-}
-
-const popups = Array.from(document.querySelectorAll('.popup')).forEach((element) => {
+popups.forEach((element) => {
   element.addEventListener('click', (evt) => {
     if (
       evt.target.classList.contains('popup__close-button') ||
@@ -49,10 +39,23 @@ const popups = Array.from(document.querySelectorAll('.popup')).forEach((element)
     }
   });
 });
-
-galleryContainer.append(...newCards); // Вставляю карточки спредом
-editBtn.addEventListener('click', openProfileEditor); // Отслеживаю клик по кнопке редактирования
-addBtn.addEventListener('click', openCardCreator); // Отслеживаю клик по кнопки добавления
-editorForm.addEventListener('submit', editorFormHandler); // Сабмит формы редактирования
-cardsForm.addEventListener('submit', cardFormHandler); // Сабмит формы добавления
 enableValidation(validationConfig);
+avatarCangeBtn.addEventListener('click', openAvatarEditor);
+editBtn.addEventListener('click', openProfileEditor);
+addBtn.addEventListener('click', openCardCreator);
+userInfoForm.addEventListener('submit', userFormHandler);
+cardsForm.addEventListener('submit', cardFormHandler);
+avatarForm.addEventListener('submit', avatarFormHandler);
+
+Promise.all(initPromises)
+  .then((res) => {
+    const user = res[0];
+    const cards = res[1];
+    userName.textContent = user.name;
+    userDescription.textContent = user.about;
+    userAvatar.src = user.avatar;
+    renderCards(cards, user._id, galleryContainer);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
