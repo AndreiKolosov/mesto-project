@@ -3,18 +3,6 @@ import API from './api.js';
 
 const cardTemplate = document.querySelector('.card-template').content; // Шаблон карточки
 
-// function removeCard() {
-//   API.deleteCard(card.id)
-//     .then((res) => {
-//       agreeBtn.removeEventListener('click', handler);
-//       card.remove();
-//       closePopup(confirmPopup);
-//     })
-//     .catch((err) => {
-//       console.log(err.message);
-//     });
-// }
-
 // !!! Попробовать вынести функции науржу
 function addLikeListener(btn) {
   const card = btn.closest('.card');
@@ -45,20 +33,18 @@ function addLikeListener(btn) {
   });
 }
 
-// нужен user id
 function createCardElement(card, userId) {
   const cardMarkup = cardTemplate.querySelector('.card').cloneNode(true);
-  const likeBtn = cardMarkup.querySelector('.card__like-button'); // Кнопка лайк
-  const cardName = cardMarkup.querySelector('.card__name'); // Элемент с названием карточки
-  const cardImg = cardMarkup.querySelector('.card__image'); // Элемент Img в карточке
+  const likeBtn = cardMarkup.querySelector('.card__like-button');
+  const cardName = cardMarkup.querySelector('.card__name');
+  const cardImg = cardMarkup.querySelector('.card__image');
   const likeCounter = cardMarkup.querySelector('.card__like-counter');
-  const removeBtn = cardMarkup.querySelector('.card__trash-button');
+  const removeBtn = cardMarkup.querySelector('.card__remove-button');
   const likes = card.likes;
   const likedByMe = Boolean(likes.find((like) => like._id === userId));
 
   if (userId !== card.owner._id) {
-    // removeBtn.style.display = 'none';
-    removeBtn.remove();
+    removeBtn.classList.add('card__remove-button_invisible');
   }
 
   if (card.likes.length > 0) {
@@ -76,7 +62,7 @@ function createCardElement(card, userId) {
 
   addLikeListener(likeBtn);
   cardImg.addEventListener('click', expendPhoto);
-  removeBtn.addEventListener('click', openConfirmPopup);
+  removeBtn.addEventListener('click', () => openConfirmPopup(card));
   return cardMarkup;
 }
 

@@ -24,6 +24,7 @@ const cardAdderPopup = document.querySelector('.popup_type_card-adder'); // Ок
 const userInfEditorPopup = document.querySelector('.popup_type_profile-editor'); // Окно редактирования профиля
 const avatarEditorPopup = document.querySelector('.popup_type_avatar-editor'); // Окно редактирования профиля
 const confirmPopup = document.querySelector('.popup_type_confirm'); // Окно подтверждения действия
+const agreeBtn = confirmPopup.querySelector('.form__save-button');
 
 function openProfileEditor() {
   nameInput.value = userName.textContent;
@@ -39,14 +40,19 @@ function openAvatarEditor() {
   openPopup(avatarEditorPopup);
 }
 
-function openConfirmPopup(evt) {
+function openConfirmPopup(cardData) {
   openPopup(confirmPopup);
-  const card = evt.target.closest('.card');
-  const agreeBtn = confirmPopup.querySelector('.form__save-button');
-  console.log(card.id);
-  // С помощью bind передал нужные мне аргументы
-  const handler = removeCardHandler.bind(this, card, agreeBtn); // В отдельной переменной чтобы потом удалить листенер
+  const handler = () => removeCardHandler(cardData, handler);
   agreeBtn.addEventListener('click', handler);
+  confirmPopup.addEventListener('click', (evt) => {
+    if (
+      evt.target.classList.contains('popup') ||
+      evt.target.classList.contains('popup__close-button') ||
+      evt.key === 'Escape'
+    ) {
+      agreeBtn.removeEventListener('click', handler);
+    }
+  });
 }
 
 function expendPhoto(evt) {
@@ -101,8 +107,9 @@ function cardFormHandler() {
     });
 }
 
-function removeCardHandler(card, agreeBtn, handler) {
-  API.deleteCard(card.id)
+function removeCardHandler(cardData, handler) {
+  const card = document.getElementById(cardData._id);
+  API.deleteCard(cardData._id)
     .then(() => {
       agreeBtn.removeEventListener('click', handler);
       card.remove();

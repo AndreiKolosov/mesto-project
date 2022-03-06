@@ -1,5 +1,5 @@
-.card__trash-button {
-  background-image: url(../../../images/buttons/trash-btn.svg);
+.card__remove-button {
+  background-image: url(../../../images/buttons/remove-btn.svg);
   background-size: contain;
   background-repeat: no-repeat;
   background-color: transparent;
@@ -12,6 +12,6 @@
   cursor: pointer;
 }
 
-.card__trash-button:hover {
+.card__remove-button:hover {
   opacity: 0.6;
 }
