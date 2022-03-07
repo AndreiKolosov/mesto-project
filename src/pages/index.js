@@ -48,9 +48,9 @@ cardsForm.addEventListener('submit', cardFormHandler);
 avatarForm.addEventListener('submit', avatarFormHandler);
 
 Promise.all(initPromises)
-  .then((res) => {
-    const user = res[0];
-    const cards = res[1];
+  .then(([userData, cardsData]) => {
+    const user = userData;
+    const cards = cardsData;
     userName.textContent = user.name;
     userDescription.textContent = user.about;
     userAvatar.src = user.avatar;
