@@ -15,9 +15,9 @@ import {
   openProfileEditor,
   openCardCreator,
   openAvatarEditor,
-  userFormHandler,
-  cardFormHandler,
-  avatarFormHandler,
+  updateUserInfo,
+  createNewCard,
+  updateAvatar,
 } from '../components/modal.js';
 import API from '../components/api.js';
 
@@ -43,14 +43,14 @@ enableValidation(validationConfig);
 avatarCangeBtn.addEventListener('click', openAvatarEditor);
 editBtn.addEventListener('click', openProfileEditor);
 addBtn.addEventListener('click', openCardCreator);
-userInfoForm.addEventListener('submit', userFormHandler);
-cardsForm.addEventListener('submit', cardFormHandler);
-avatarForm.addEventListener('submit', avatarFormHandler);
+userInfoForm.addEventListener('submit', updateUserInfo);
+cardsForm.addEventListener('submit', createNewCard);
+avatarForm.addEventListener('submit', updateAvatar);
 
 Promise.all(initPromises)
-  .then((res) => {
-    const user = res[0];
-    const cards = res[1];
+  .then(([userData, cardsData]) => {
+    const user = userData;
+    const cards = cardsData;
     userName.textContent = user.name;
     userDescription.textContent = user.about;
     userAvatar.src = user.avatar;

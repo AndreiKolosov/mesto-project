@@ -31,7 +31,6 @@
 @import url(../blocks/card/__like-container/card__like-container.css);
 @import url(../blocks/card/__like-button/_active/card__like-button_active.css);
 @import url(../blocks/card/__like-counter/card__like-counter.css);
-@import url(../blocks/card/__like-counter/_visible/card__like-counter_visible.css);
 @import url(../blocks/card/__remove-buton/card__remove-button.css);
 @import url(../blocks/card/__remove-buton/_invisible/card__remove-button_invisible.css);
 
@@ -51,6 +50,7 @@
 @import url(../blocks/form/__user-info/form__user-info.css);
 @import url(../blocks/form/__new-place/form__new-place.css);
 @import url(../blocks/form/__item/form__item.css);
+@import url(../blocks/form/__item/_hiden/form__item_hiden.css);
 @import url(../blocks/form/__item/_type/form__item_type_error.css);
 @import url(../blocks/form/__item-error/form__item-error.css);
 @import url(../blocks/form/__item-error/_active/form__item-error_active.css);

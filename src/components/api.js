@@ -17,23 +17,13 @@ const parseResponse = (res) => {
 const getCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers,
-  })
-    .then((res) => parseResponse(res))
-    .catch((err) => {
-      console.log(err);
-      return Promise.reject(err);
-    });
+  }).then((res) => parseResponse(res));
 };
 
 const getUser = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers,
-  })
-    .then((res) => parseResponse(res))
-    .catch((err) => {
-      console.log(err);
-      return Promise.reject(err);
-    });
+  }).then((res) => parseResponse(res));
 };
 
 const updateAvatar = (avatar) => {
@@ -43,12 +33,7 @@ const updateAvatar = (avatar) => {
     body: JSON.stringify({
       avatar,
     }),
-  })
-    .then((res) => parseResponse(res))
-    .catch((err) => {
-      console.log(err);
-      return Promise.reject(err);
-    });
+  }).then((res) => parseResponse(res));
 };
 
 const updateUser = (name, about) => {
@@ -59,11 +44,7 @@ const updateUser = (name, about) => {
       name,
       about,
     }),
-  })
-    .then((res) => parseResponse(res))
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => parseResponse(res));
 };
 
 const createCard = (name, link) => {
@@ -74,44 +55,28 @@ const createCard = (name, link) => {
       name,
       link,
     }),
-  })
-    .then((res) => parseResponse(res))
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => parseResponse(res));
 };
 
 const deleteCard = (cardId) => {
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: 'DELETE',
     headers: config.headers,
-  })
-    .then((res) => parseResponse(res))
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => parseResponse(res));
 };
 
 const addLike = (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: 'PUT',
     headers: config.headers,
-  })
-    .then((res) => parseResponse(res))
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => parseResponse(res));
 };
 
 const removeLike = (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: 'DELETE',
     headers: config.headers,
-  })
-    .then((res) => parseResponse(res))
-    .catch((err) => {
-      console.log(err);
-    });
+  }).then((res) => parseResponse(res));
 };
 
 export default {
