@@ -1,6 +1,0 @@
-.card__like-counter_visible {
-  opacity: 1;
-  visibility: visible;
-  position: relative;
-  transition: all 0.2s linear;
-}

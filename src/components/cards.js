@@ -13,7 +13,6 @@ function addLikeListener(btn) {
       API.removeLike(card.id)
         .then((res) => {
           likeCounter.textContent = res.likes.length;
-          likeCounter.classList.remove('card__like-counter_visible');
           btn.classList.remove('card__like-button_active');
         })
         .catch((err) => {
@@ -23,7 +22,6 @@ function addLikeListener(btn) {
       API.addLike(card.id)
         .then((res) => {
           likeCounter.textContent = res.likes.length;
-          likeCounter.classList.add('card__like-counter_visible');
           btn.classList.add('card__like-button_active');
         })
         .catch((err) => {
@@ -42,6 +40,8 @@ function createCardElement(card, userId) {
   const removeBtn = cardMarkup.querySelector('.card__remove-button');
   const likes = card.likes;
   const likedByMe = Boolean(likes.find((like) => like._id === userId));
+
+  likeCounter.textContent = 0;
 
   if (userId !== card.owner._id) {
     removeBtn.classList.add('card__remove-button_invisible');
