@@ -20,7 +20,7 @@
     <main class="content">
       <section class="profile" aria-label="Профиль">
         <div class="profile__avatar-container">
-          <img class="profile__avatar" alt="Аватар">
+          <img class="profile__avatar" src="#" alt="Аватар">
         </div>
         <div class="profile__info">
           <div class="profile__user">
@@ -44,7 +44,7 @@
         <form class="form" id="editor-form" novalidate>
           <h2 class="form__heading">Редактировать профиль</h2>
           <fieldset class="form__input-container form__user-info">
-            <input type="text" class="form__item" name="user-name" placeholder="Имя" required id="user-name" required minlength="2" maxlength="40">
+            <input type="text" class="form__item" name="user-name" placeholder="Имя" required id="user-name" minlength="2" maxlength="40">
             <span class="form__item-error user-name_error"></span>
             <input type="text" class="form__item" name="user-description" placeholder="О себе" id="user-description" required minlength="2" maxlength="200">
             <span class="form__item-error user-description_error"></span>
@@ -74,8 +74,7 @@
         <form class="form" id="card-form">
           <h2 class="form__heading">Новое место</h2>
           <fieldset class="form__input-container form__new-place">
-            <input type="text" class="form__item" name="place-name" placeholder="Название" required value="" id="place-name" required minlength="2"
-              maxlength="30">
+            <input type="text" class="form__item" name="place-name" placeholder="Название" required value="" id="place-name" minlength="2" maxlength="30">
             <span class="form__item-error place-name_error"></span>
             <input type="url" class="form__item" name="place-img-link" placeholder="Ссылка на картинку" value="" id="place-img-link" required>
             <span class="form__item-error place-img-link_error"></span>
@@ -85,7 +84,7 @@
       </div>
     </section>
 
-    <section class="popup popup_type_img">
+    <section class="popup popup_type_img" aria-label="Окно просмотра фото">
       <figure class="popup__container popup__container_type_img">
         <button type="button" class="page__button popup__close-button"></button>
         <img src="#" alt="#" class="popup__image">
@@ -96,8 +95,10 @@
     <section class="popup popup_type_confirm">
       <div class="popup__container">
         <button type="button" class="page__button popup__close-button"></button>
-        <form class="form" id="card-remove">
+        <form class="form" id="confirm-form">
           <h2 class="popup__heading">Вы уверены?</h2>
+          <input type="text" class="form__item form__item_hiden" id="confirm-input" name="card-id" required>
+          <span class="form__item-error confirm-input_error"></span>
           <button type="submit" class="page__button form__save-button">Да</button>
         </form>
       </div>

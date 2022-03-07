@@ -9,9 +9,11 @@ import {
   userInfoForm,
   cardsForm,
   avatarForm,
+  confirmForm,
   placeNameInput,
   placeLinkInput,
   avatarLinkInput,
+  confirmIdInput,
   userAvatar,
 } from '../components/variables.js';
 import { disableButton, validationConfig } from './validate.js';
@@ -24,7 +26,19 @@ const cardAdderPopup = document.querySelector('.popup_type_card-adder'); // Ок
 const userInfEditorPopup = document.querySelector('.popup_type_profile-editor'); // Окно редактирования профиля
 const avatarEditorPopup = document.querySelector('.popup_type_avatar-editor'); // Окно редактирования профиля
 const confirmPopup = document.querySelector('.popup_type_confirm'); // Окно подтверждения действия
-const agreeBtn = confirmPopup.querySelector('.form__save-button');
+const saveUserBtn = userInfoForm.querySelector('.form__save-button');
+const saveAvatarBtn = avatarForm.querySelector('.form__save-button');
+const createCardBtn = cardsForm.querySelector('.form__save-button');
+const agreeBtn = confirmForm.querySelector('.form__save-button');
+
+function openConfirmPopup(cardId) {
+  confirmIdInput.value = cardId;
+  agreeBtn.removeAttribute('disabled');
+  agreeBtn.classList.remove('form__save-button_disabled');
+  // const handler = () => removeCard(confirmIdInput.value);
+  agreeBtn.addEventListener('click', removeCard);
+  openPopup(confirmPopup);
+}
 
 function openProfileEditor() {
   nameInput.value = userName.textContent;
@@ -40,21 +54,6 @@ function openAvatarEditor() {
   openPopup(avatarEditorPopup);
 }
 
-function openConfirmPopup(cardData) {
-  openPopup(confirmPopup);
-  const handler = () => removeCardHandler(cardData, handler);
-  agreeBtn.addEventListener('click', handler);
-  confirmPopup.addEventListener('click', (evt) => {
-    if (
-      evt.target.classList.contains('popup') ||
-      evt.target.classList.contains('popup__close-button') ||
-      evt.key === 'Escape'
-    ) {
-      agreeBtn.removeEventListener('click', handler);
-    }
-  });
-}
-
 function expendPhoto(evt) {
   const image = evt.target.closest('.card__image'); // Элемент Img в карточке
   openPopup(imagePopup);
@@ -65,66 +64,63 @@ function expendPhoto(evt) {
 
 //   Убрал evt.prevetDefault из функций-обработчиков форм потому-что при включении
 // валидации отменяется стандартная отправка всех форм
-function userFormHandler() {
-  const createBtn = userInfoForm.querySelector('.form__save-button');
-  createBtn.textContent = 'Сохранение...';
+function updateUserInfo() {
+  saveUserBtn.textContent = 'Сохранение...';
   API.updateUser(nameInput.value, descriptionInput.value)
     .then((res) => {
       userName.textContent = res.name;
       userDescription.textContent = res.about;
-      disableButton(createBtn, validationConfig);
+      disableButton(saveUserBtn, validationConfig);
       closePopup(userInfEditorPopup);
     })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
-      createBtn.textContent = 'Сохранить';
+      saveUserBtn.textContent = 'Сохранить';
     });
 }
 
-function avatarFormHandler() {
-  const createBtn = avatarForm.querySelector('.form__save-button');
-  createBtn.textContent = 'Сохранение...';
+function updateAvatar() {
+  saveAvatarBtn.textContent = 'Сохранение...';
   API.updateAvatar(avatarLinkInput.value)
     .then((res) => {
       userAvatar.src = res.avatar;
       avatarForm.reset();
-      disableButton(createBtn, validationConfig);
+      disableButton(saveAvatarBtn, validationConfig);
       closePopup(avatarEditorPopup);
     })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
-      createBtn.textContent = 'Сохранить';
+      saveAvatarBtn.textContent = 'Сохранить';
     });
 }
 
-function cardFormHandler() {
-  const createBtn = cardsForm.querySelector('.form__save-button');
-  createBtn.textContent = 'Сохранение...';
+function createNewCard() {
+  createCardBtn.textContent = 'Сохранение...';
   API.createCard(placeNameInput.value, placeLinkInput.value)
     .then((res) => {
       galleryContainer.prepend(createCardElement(res, res.owner._id));
       cardsForm.reset();
-      disableButton(createBtn, validationConfig);
+      disableButton(createCardBtn, validationConfig);
       closePopup(cardAdderPopup);
     })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
-      createBtn.textContent = 'Создать';
+      createCardBtn.textContent = 'Создать';
     });
 }
 
-function removeCardHandler(cardData, handler) {
-  const card = document.getElementById(cardData._id);
+function removeCard() {
+  const cardId = confirmIdInput.value;
+  const card = document.getElementById(`${cardId}`);
   agreeBtn.textContent = 'Удаление...';
-  API.deleteCard(cardData._id)
+  API.deleteCard(cardId)
     .then(() => {
-      agreeBtn.removeEventListener('click', handler);
       card.remove();
       closePopup(confirmPopup);
     })
@@ -133,6 +129,7 @@ function removeCardHandler(cardData, handler) {
     })
     .finally(() => {
       agreeBtn.textContent = 'Да';
+      // confirmIdInput.value = '';
     });
 }
 
@@ -142,7 +139,7 @@ export {
   openAvatarEditor,
   openCardCreator,
   openConfirmPopup,
-  userFormHandler,
-  cardFormHandler,
-  avatarFormHandler,
+  updateUserInfo,
+  createNewCard,
+  updateAvatar,
 };

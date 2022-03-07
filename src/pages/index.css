@@ -50,6 +50,7 @@
 @import url(../blocks/form/__user-info/form__user-info.css);
 @import url(../blocks/form/__new-place/form__new-place.css);
 @import url(../blocks/form/__item/form__item.css);
+@import url(../blocks/form/__item/_hiden/form__item_hiden.css);
 @import url(../blocks/form/__item/_type/form__item_type_error.css);
 @import url(../blocks/form/__item-error/form__item-error.css);
 @import url(../blocks/form/__item-error/_active/form__item-error_active.css);

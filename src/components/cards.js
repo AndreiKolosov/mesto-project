@@ -62,7 +62,7 @@ function createCardElement(card, userId) {
 
   addLikeListener(likeBtn);
   cardImg.addEventListener('click', expendPhoto);
-  removeBtn.addEventListener('click', () => openConfirmPopup(card));
+  removeBtn.addEventListener('click', () => openConfirmPopup(card._id));
   return cardMarkup;
 }
 
