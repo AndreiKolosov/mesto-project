@@ -1,4 +1,4 @@
-import { expendPhoto, openConfirmPopup } from '../components/modal.js';
+import { expandPhoto, openConfirmPopup } from '../components/modal.js';
 import API from './api.js';
 
 const cardTemplate = document.querySelector('.card-template').content; // Шаблон карточки
@@ -61,7 +61,7 @@ function createCardElement(card, userId) {
   cardImg.alt = card.name;
 
   addLikeListener(likeBtn);
-  cardImg.addEventListener('click', expendPhoto);
+  cardImg.addEventListener('click', expandPhoto);
   removeBtn.addEventListener('click', () => openConfirmPopup(card._id));
   return cardMarkup;
 }

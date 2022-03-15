@@ -54,7 +54,7 @@ function openAvatarEditor() {
   openPopup(avatarEditorPopup);
 }
 
-function expendPhoto(evt) {
+function expandPhoto(evt) {
   const image = evt.target.closest('.card__image'); // Элемент Img в карточке
   openPopup(imagePopup);
   photoSizeBig.src = image.src;
@@ -134,7 +134,7 @@ function removeCard() {
 }
 
 export {
-  expendPhoto,
+  expandPhoto,
   openProfileEditor,
   openAvatarEditor,
   openCardCreator,
