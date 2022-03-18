@@ -10,6 +10,7 @@ import {
   userName,
   userDescription,
   userAvatar,
+  config,
 } from '../components/variables.js';
 import {
   openProfileEditor,
@@ -19,15 +20,13 @@ import {
   createNewCard,
   updateAvatar,
 } from '../components/modal.js';
-import API from '../components/api.js';
+import Api from '../components/api.js';
 
 const editBtn = document.querySelector('.profile__edit-button'); // Кнопка редактирования профиля
 const addBtn = document.querySelector('.profile__add-button'); // Кнопка добавления карточки
 const avatarCangeBtn = document.querySelector('.profile__avatar-container'); // Кнопка смены аватара
 const popups = Array.from(document.querySelectorAll('.popup')); // Попапы
-const getUser = API.getUser();
-const getCards = API.getCards();
-const initPromises = [getUser, getCards];
+const api = new Api(config);
 
 popups.forEach((element) => {
   element.addEventListener('click', (evt) => {
@@ -47,7 +46,7 @@ userInfoForm.addEventListener('submit', updateUserInfo);
 cardsForm.addEventListener('submit', createNewCard);
 avatarForm.addEventListener('submit', updateAvatar);
 
-Promise.all(initPromises)
+Promise.all([api.getUser(), api.getCards()])
   .then(([userData, cardsData]) => {
     const user = userData;
     const cards = cardsData;

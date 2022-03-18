@@ -1,91 +1,79 @@
-const config = {
-  baseUrl: 'https://nomoreparties.co/v1/plus-cohort7',
-  headers: {
-    authorization: '32e69527-8018-4c7f-823e-614d86c48870',
-    'Content-Type': 'application/json',
-  },
-};
-
-const parseResponse = (res) => {
-  if (res.ok) {
-    return res.json();
+export default class Api {
+  constructor({ baseUrl, headers }) {
+    this._baseUrl = baseUrl;
+    this._headers = headers;
   }
 
-  return Promise.reject(`Ошибка: ${res.status}`);
-};
+  _parseResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
 
-const getCards = () => {
-  return fetch(`${config.baseUrl}/cards`, {
-    headers: config.headers,
-  }).then((res) => parseResponse(res));
-};
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
 
-const getUser = () => {
-  return fetch(`${config.baseUrl}/users/me`, {
-    headers: config.headers,
-  }).then((res) => parseResponse(res));
-};
+  getCards() {
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers,
+    }).then((res) => this._parseResponse(res));
+  }
 
-const updateAvatar = (avatar) => {
-  return fetch(`${config.baseUrl}/users/me/avatar`, {
-    method: 'PATCH',
-    headers: config.headers,
-    body: JSON.stringify({
-      avatar,
-    }),
-  }).then((res) => parseResponse(res));
-};
+  getUser() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+    }).then((res) => this._parseResponse(res));
+  }
 
-const updateUser = (name, about) => {
-  return fetch(`${config.baseUrl}/users/me`, {
-    method: 'PATCH',
-    headers: config.headers,
-    body: JSON.stringify({
-      name,
-      about,
-    }),
-  }).then((res) => parseResponse(res));
-};
+  updateAvatar(avatar) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar,
+      }),
+    }).then((res) => this._parseResponse(res));
+  }
 
-const createCard = (name, link) => {
-  return fetch(`${config.baseUrl}/cards`, {
-    method: 'POST',
-    headers: config.headers,
-    body: JSON.stringify({
-      name,
-      link,
-    }),
-  }).then((res) => parseResponse(res));
-};
+  updateUser(name, about) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        name,
+        about,
+      }),
+    }).then((res) => this._parseResponse(res));
+  }
 
-const deleteCard = (cardId) => {
-  return fetch(`${config.baseUrl}/cards/${cardId}`, {
-    method: 'DELETE',
-    headers: config.headers,
-  }).then((res) => parseResponse(res));
-};
+  createCard(name, link) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        name,
+        link,
+      }),
+    }).then((res) => this._parseResponse(res));
+  }
 
-const addLike = (cardId) => {
-  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-    method: 'PUT',
-    headers: config.headers,
-  }).then((res) => parseResponse(res));
-};
+  deleteCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    }).then((res) => this._parseResponse(res));
+  }
 
-const removeLike = (cardId) => {
-  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-    method: 'DELETE',
-    headers: config.headers,
-  }).then((res) => parseResponse(res));
-};
+  addLike(cardId) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+      method: 'PUT',
+      headers: this._headers,
+    }).then((res) => this._parseResponse(res));
+  }
 
-export default {
-  getUser,
-  getCards,
-  updateAvatar,
-  updateUser,
-  createCard,
-  deleteCard,
-  addLike,
-  removeLike,
-};
+  removeLike(cardId) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    }).then((res) => this._parseResponse(res));
+  }
+}

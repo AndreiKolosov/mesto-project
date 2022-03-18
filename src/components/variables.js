@@ -13,6 +13,14 @@ const avatarLinkInput = avatarForm.querySelector('#user-avatar'); // Поле в
 const confirmIdInput = confirmForm.querySelector('#confirm-input'); // Поле для хранения id удаляемой карточки
 const galleryContainer = document.querySelector('.galery__list'); // Контейнер карточек
 
+const config = {
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort7',
+  headers: {
+    authorization: '32e69527-8018-4c7f-823e-614d86c48870',
+    'Content-Type': 'application/json',
+  },
+};
+
 export {
   userName,
   nameInput,
@@ -28,4 +36,5 @@ export {
   confirmForm,
   avatarLinkInput,
   userAvatar,
+  config,
 };

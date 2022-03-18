@@ -17,7 +17,7 @@ import {
   userAvatar,
 } from '../components/variables.js';
 import { disableButton, validationConfig } from './validate.js';
-import API from './api.js';
+import Api from './api.js';
 
 const photoSizeBig = document.querySelector('.popup__image'); // Фото в модальном окне
 const photoCaption = document.querySelector('.popup__img-caption'); // Подпись к фото в модальном окне
