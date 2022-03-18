@@ -1,7 +1,93 @@
 import { expandPhoto, openConfirmPopup } from '../components/modal.js';
-import API from './api.js';
 
-const cardTemplate = document.querySelector('.card-template').content; // Шаблон карточки
+export default class Card {
+  constructor({ likes, link, name, owner, _id }, cardTemplateSelector, { setLike }) {
+    this.likes = likes;
+    this.link = link;
+    this.name = name;
+    this.owner = owner;
+    this.id = _id;
+    this._cardTemplateSelector = cardTemplateSelector;
+    this._setLike = setLike;
+  }
+  _getElement() {
+    const cardElement = document
+      .querySelector(this._cardTemplateSelector)
+      .content.querySelector('.card')
+      .cloneNode(true);
+
+    return cardElement;
+  }
+
+  createCardElement(userId) {
+    // const cardMarkup = cardTemplate.querySelector('.card').cloneNode(true);
+    this._element = this._getElement();
+    const likeBtn = this._element.querySelector('.card__like-button');
+    const cardName = this._element.querySelector('.card__name');
+    const cardImg = this._element.querySelector('.card__image');
+    const likeCounter = this._element.querySelector('.card__like-counter');
+    const removeBtn = this._element.querySelector('.card__remove-button');
+    // const likes = card.likes;
+
+    likeCounter.textContent = 0;
+
+    if (userId !== this.owner._id) {
+      removeBtn.classList.add('card__remove-button_invisible');
+    }
+
+    if (this.likes.length > 0) {
+      likeCounter.classList.add('card__like-counter_visible');
+      likeCounter.textContent = this.likes.length;
+      if (this._islikedByMe()) {
+        likeBtn.classList.add('card__like-button_active');
+      }
+    }
+
+    this._element.id = this._id;
+    cardName.textContent = this.name;
+    cardImg.src = this.link;
+    cardImg.alt = this.name;
+
+    addLikeListener(likeBtn);
+    cardImg.addEventListener('click', expandPhoto);
+    removeBtn.addEventListener('click', () => openConfirmPopup(card._id));
+    return cardMarkup;
+  }
+
+  _renderLike(likeBtn) {
+    likeBtn.classList.toggle('card__like-button_active');
+  }
+
+  _renderLikeCount(card) {
+    this.likes = card.likes;
+    likeCounter.textContent = this.likes.length;
+  }
+
+  _selectLikeAction(likedByMe) {
+    if (likedByMe) {
+      return 'DELETE';
+    } else {
+      return 'PUT';
+    }
+  }
+
+  _islikedByMe() {
+    return Boolean(this.likes.find((like) => like._id === userId));
+  }
+
+  _handleLikeClick() {
+    const action = this._selectLikeAction(this._islikedByMe());
+    this._setLike(this.id, action).then((card) => {
+      this._renderLikeCount(card);
+    });
+  }
+
+  // _setEventListeners() {
+  //   likeBtn.addEventListener('click', () => )
+  // }
+}
+
+// const cardTemplate = document.querySelector('.card-template').content; // Шаблон карточки
 
 // !!! Попробовать вынести функции науржу
 function addLikeListener(btn) {
@@ -31,41 +117,6 @@ function addLikeListener(btn) {
   });
 }
 
-function createCardElement(card, userId) {
-  const cardMarkup = cardTemplate.querySelector('.card').cloneNode(true);
-  const likeBtn = cardMarkup.querySelector('.card__like-button');
-  const cardName = cardMarkup.querySelector('.card__name');
-  const cardImg = cardMarkup.querySelector('.card__image');
-  const likeCounter = cardMarkup.querySelector('.card__like-counter');
-  const removeBtn = cardMarkup.querySelector('.card__remove-button');
-  const likes = card.likes;
-  const likedByMe = Boolean(likes.find((like) => like._id === userId));
-
-  likeCounter.textContent = 0;
-
-  if (userId !== card.owner._id) {
-    removeBtn.classList.add('card__remove-button_invisible');
-  }
-
-  if (card.likes.length > 0) {
-    likeCounter.classList.add('card__like-counter_visible');
-    likeCounter.textContent = card.likes.length;
-    if (likedByMe) {
-      likeBtn.classList.add('card__like-button_active');
-    }
-  }
-
-  cardMarkup.id = card._id;
-  cardName.textContent = card.name;
-  cardImg.src = card.link;
-  cardImg.alt = card.name;
-
-  addLikeListener(likeBtn);
-  cardImg.addEventListener('click', expandPhoto);
-  removeBtn.addEventListener('click', () => openConfirmPopup(card._id));
-  return cardMarkup;
-}
-
 function renderCards(cards, userId, container) {
   cards.forEach((card) => {
     const markedCard = createCardElement(card, userId);
@@ -74,4 +125,4 @@ function renderCards(cards, userId, container) {
   });
 }
 
-export { renderCards, createCardElement };
+// export { renderCards, createCardElement };
