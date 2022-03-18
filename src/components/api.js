@@ -63,16 +63,23 @@ export default class Api {
     }).then((res) => this._parseResponse(res));
   }
 
-  addLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method: 'PUT',
-      headers: this._headers,
-    }).then((res) => this._parseResponse(res));
-  }
+  // addLike(cardId) {
+  //   return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+  //     method: 'PUT',
+  //     headers: this._headers,
+  //   }).then((res) => this._parseResponse(res));
+  // }
 
-  removeLike(cardId) {
+  // removeLike(cardId) {
+  //   return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+  //     method: 'DELETE',
+  //     headers: this._headers,
+  //   }).then((res) => this._parseResponse(res));
+  // }
+
+  setLike(cardId, method) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method: 'DELETE',
+      method: method,
       headers: this._headers,
     }).then((res) => this._parseResponse(res));
   }

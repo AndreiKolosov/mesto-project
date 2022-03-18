@@ -48,6 +48,7 @@ export default class Card {
     cardImg.src = this.link;
     cardImg.alt = this.name;
 
+    // this._setEventListeners(likeBtn, removeBtn, cardImg)
     addLikeListener(likeBtn);
     cardImg.addEventListener('click', expandPhoto);
     removeBtn.addEventListener('click', () => openConfirmPopup(card._id));
@@ -75,14 +76,18 @@ export default class Card {
     return Boolean(this.likes.find((like) => like._id === userId));
   }
 
-  _handleLikeClick() {
+  _handleLikeClick(likeBtn) {
     const action = this._selectLikeAction(this._islikedByMe());
-    this._setLike(this.id, action).then((card) => {
-      this._renderLikeCount(card);
-    });
+    this._setLike(this.id, action) // нужно найти способ не хранить методы апи в каждой карте
+      .then((card) => {
+        this._renderLikeCount(card);
+        this._renderLike(likeBtn);
+      });
   }
 
-  // _setEventListeners() {
+  //TODO: ОТДЕЛЬНЫЙ КЛАСС, КОТОРЫЙ ДОБАВЛЯЕТ РАЗМЕТКУ НА СТРАНИЦУ ИЗ РАЗМЕТКИ КЛАССА CARD
+
+  // _setEventListeners(likeBtn, removeBtn, cardImg) {
   //   likeBtn.addEventListener('click', () => )
   // }
 }
