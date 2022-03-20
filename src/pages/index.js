@@ -1,6 +1,6 @@
 import '../pages/index.css';
 import { enableValidation, validationConfig } from '../components/validate.js';
-import { renderCards } from '../components/cards.js';
+import Card from '../components/cards.js';
 import { closePopup } from '../components/utils';
 import {
   galleryContainer,
@@ -21,6 +21,7 @@ import {
   updateAvatar,
 } from '../components/modal.js';
 import Api from '../components/api.js';
+import Section from '../components/section.js';
 
 const editBtn = document.querySelector('.profile__edit-button'); // Кнопка редактирования профиля
 const addBtn = document.querySelector('.profile__add-button'); // Кнопка добавления карточки
@@ -53,8 +54,19 @@ Promise.all([api.getUser(), api.getCards()])
     userName.textContent = user.name;
     userDescription.textContent = user.about;
     userAvatar.src = user.avatar;
-    renderCards(cards, user._id, galleryContainer);
+    // renderCards(cards, user._id, galleryContainer);
+    const cardList = new Section({
+      data: cards,
+      renderer: (item) => {
+        const card = new Card(item, '.card-template', api);
+        const cardElement = card.createCardElement(user._id);
+        cardList.setItem(cardElement);
+      }
+    },
+    '.galery__list');
+    cardList.renderItems();
   })
   .catch((err) => {
     console.log(err);
   });
+

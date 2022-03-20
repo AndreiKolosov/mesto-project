@@ -7,6 +7,7 @@ export default class Card {
     this.name = name;
     this.owner = owner;
     this.id = _id;
+    
     this._cardTemplateSelector = cardTemplateSelector;
     this._setLike = setLike;
   }
@@ -28,7 +29,7 @@ export default class Card {
     const likeCounter = this._element.querySelector('.card__like-counter');
     const removeBtn = this._element.querySelector('.card__remove-button');
     // const likes = card.likes;
-
+    
     likeCounter.textContent = 0;
 
     if (userId !== this.owner._id) {
@@ -38,7 +39,7 @@ export default class Card {
     if (this.likes.length > 0) {
       likeCounter.classList.add('card__like-counter_visible');
       likeCounter.textContent = this.likes.length;
-      if (this._islikedByMe()) {
+      if (this._islikedByMe(userId)) {
         likeBtn.classList.add('card__like-button_active');
       }
     }
@@ -52,7 +53,7 @@ export default class Card {
     addLikeListener(likeBtn);
     cardImg.addEventListener('click', expandPhoto);
     removeBtn.addEventListener('click', () => openConfirmPopup(card._id));
-    return cardMarkup;
+    return this._element;
   }
 
   _renderLike(likeBtn) {
@@ -72,7 +73,7 @@ export default class Card {
     }
   }
 
-  _islikedByMe() {
+  _islikedByMe(userId) {
     return Boolean(this.likes.find((like) => like._id === userId));
   }
 
@@ -85,9 +86,7 @@ export default class Card {
       });
   }
 
-  //TODO: ОТДЕЛЬНЫЙ КЛАСС, КОТОРЫЙ ДОБАВЛЯЕТ РАЗМЕТКУ НА СТРАНИЦУ ИЗ РАЗМЕТКИ КЛАССА CARD
-
-  // _setEventListeners(likeBtn, removeBtn, cardImg) {
+   // _setEventListeners(likeBtn, removeBtn, cardImg) {
   //   likeBtn.addEventListener('click', () => )
   // }
 }

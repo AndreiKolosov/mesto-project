@@ -1,5 +1,5 @@
 import { openPopup, closePopup } from '../components/utils.js';
-import { createCardElement } from './cards.js';
+import Card from './cards.js';
 import {
   nameInput,
   userName,
