@@ -5,7 +5,6 @@ import {
   userName,
   userDescription,
   descriptionInput,
-  galleryContainer,
   userInfoForm,
   cardsForm,
   avatarForm,

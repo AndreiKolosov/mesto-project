@@ -1,6 +1,7 @@
-const userName = document.querySelector('.profile__name'); // Имя пользователя на странице
-const userDescription = document.querySelector('.profile__description'); // Описание пользователя на странице
+const userName = document.querySelector('.profile__name');
+const userDescription = document.querySelector('.profile__description');
 const userAvatar = document.querySelector('.profile__avatar');
+//************************************************************* */
 const userInfoForm = document.querySelector('#editor-form'); // Форма редактирования информации о пользователе
 const cardsForm = document.querySelector('#card-form'); // Форма добавления карточки
 const avatarForm = document.querySelector('#avatar-form'); // форма смены аватара
@@ -11,7 +12,14 @@ const placeNameInput = cardsForm.querySelector('#place-name'); // Поле вв�
 const placeLinkInput = cardsForm.querySelector('#place-img-link'); // Поле ввода ссылки на фотографию
 const avatarLinkInput = avatarForm.querySelector('#user-avatar'); // Поле ввода ссылки на новый аватар
 const confirmIdInput = confirmForm.querySelector('#confirm-input'); // Поле для хранения id удаляемой карточки
-const galleryContainer = document.querySelector('.galery__list'); // Контейнер карточек
+// const galleryContainer = document.querySelector('.galery__list'); // Контейнер карточек
+// Селекторы
+const userNameSelector = '.profile__name'; // Имя пользователя на странице
+const userDescriptionSelector = '.profile__description'; // Описание пользователя на странице
+const userAvatarSelector = '.profile__avatar';
+const cardTemplateSelector = '.card-template';
+const galleryContainerSelector = '.galery__list';
+
 
 const config = {
   baseUrl: 'https://nomoreparties.co/v1/plus-cohort7',
@@ -23,18 +31,22 @@ const config = {
 
 export {
   userName,
-  nameInput,
   userDescription,
+  userAvatar,
+  nameInput,
   descriptionInput,
   placeNameInput,
   placeLinkInput,
   confirmIdInput,
-  galleryContainer,
   cardsForm,
   userInfoForm,
   avatarForm,
   confirmForm,
   avatarLinkInput,
-  userAvatar,
+  userDescriptionSelector,
+  userNameSelector,
+  userAvatarSelector,
+  cardTemplateSelector,
+  galleryContainerSelector,
   config,
 };
