@@ -18,6 +18,6 @@ export default class User {
         this._userDescriptionElement.textContent = this.about;
         this._userAvatarElement.src = this.avatar;
     }
-
+// Продумать поведение функции setInfo на случай вызова из кнопок редактирования пользователей и аватара
 
 }
