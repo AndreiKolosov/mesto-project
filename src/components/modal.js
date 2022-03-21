@@ -1,4 +1,4 @@
-import { openPopup, closePopup } from '../components/utils.js';
+// import { openPopup, closePopup } from '../components/utils.js';
 import Card from './cards.js';
 import {
   nameInput,
@@ -133,7 +133,7 @@ function removeCard() {
 }
 
 export {
-  expandPhoto,
+  // expandPhoto,
   openProfileEditor,
   openAvatarEditor,
   openCardCreator,

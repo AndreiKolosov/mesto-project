@@ -1,7 +1,13 @@
-import { expandPhoto, openConfirmPopup } from '../components/modal.js';
+// import { expandPhoto, openConfirmPopup } from '../components/modal.js';
 
 export default class Card {
-  constructor({ likes, link, name, owner, _id }, cardTemplateSelector, handleLikeClick, handleDeleteClick, likedByMe) {
+  constructor(
+    { likes, link, name, owner, _id },
+    cardTemplateSelector,
+    handleLikeClick,
+    handleDeleteClick,
+    likedByMe
+  ) {
     this.likes = likes;
     this.link = link;
     this.name = name;
@@ -27,7 +33,7 @@ export default class Card {
     const cardImg = this._element.querySelector('.card__image');
     const likeCounter = this._element.querySelector('.card__like-counter');
     const removeBtn = this._element.querySelector('.card__remove-button');
-    
+
     likeCounter.textContent = 0;
     this._renderLikeCount(this);
 
@@ -35,10 +41,10 @@ export default class Card {
       removeBtn.classList.add('card__remove-button_invisible');
     }
 
-    if(this._isLikedByMe){
+    if (this._isLikedByMe) {
       this._renderLike(likeBtn);
     }
-     
+
     this._element.id = this._id; //УБРАТЬ ПРИСВАИВАНИЕ ID ЭЛЕМЕНТУ, Т.К. ОН УЖЕ ЕСТЬ В ЭКЗЕМПЛЯРЕ КЛАССА CARD
     cardName.textContent = this.name;
     cardImg.src = this.link;
@@ -46,8 +52,8 @@ export default class Card {
 
     this._setEventListeners(likeBtn, removeBtn, cardImg);
     // addLikeListener(likeBtn);
-    cardImg.addEventListener('click', expandPhoto);
-    removeBtn.addEventListener('click', () => openConfirmPopup(card._id));
+    //cardImg.addEventListener('click', expandPhoto);
+    //removeBtn.addEventListener('click', () => openConfirmPopup(card._id));
     return this._element;
   }
 
@@ -75,7 +81,7 @@ export default class Card {
   // }
 
   _setEventListeners(likeBtn, removeBtn, cardImg) {
-    likeBtn.addEventListener('click', () => this._handleLikeClick(likeBtn))
+    likeBtn.addEventListener('click', () => this._handleLikeClick(likeBtn));
   }
 }
 
