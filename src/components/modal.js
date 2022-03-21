@@ -1,5 +1,5 @@
 // import { openPopup, closePopup } from '../components/utils.js';
-import Card from './cards.js';
+
 import {
   nameInput,
   userName,
@@ -16,7 +16,7 @@ import {
   userAvatar,
 } from '../components/variables.js';
 import { disableButton, validationConfig } from './validate.js';
-import Api from './api.js';
+
 
 const photoSizeBig = document.querySelector('.popup__image'); // Фото в модальном окне
 const photoCaption = document.querySelector('.popup__img-caption'); // Подпись к фото в модальном окне
@@ -63,22 +63,22 @@ function expandPhoto(evt) {
 
 //   Убрал evt.prevetDefault из функций-обработчиков форм потому-что при включении
 // валидации отменяется стандартная отправка всех форм
-function updateUserInfo() {
-  saveUserBtn.textContent = 'Сохранение...';
-  API.updateUser(nameInput.value, descriptionInput.value)
-    .then((res) => {
-      userName.textContent = res.name;
-      userDescription.textContent = res.about;
-      disableButton(saveUserBtn, validationConfig);
-      closePopup(userInfEditorPopup);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      saveUserBtn.textContent = 'Сохранить';
-    });
-}
+// function updateUserInfo() {
+//   saveUserBtn.textContent = 'Сохранение...';
+//   API.updateUser(nameInput.value, descriptionInput.value)
+//     .then((res) => {
+//       userName.textContent = res.name;
+//       userDescription.textContent = res.about;
+//       disableButton(saveUserBtn, validationConfig);
+//       closePopup(userInfEditorPopup);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     })
+//     .finally(() => {
+//       saveUserBtn.textContent = 'Сохранить';
+//     });
+// }
 
 function updateAvatar() {
   saveAvatarBtn.textContent = 'Сохранение...';
@@ -138,7 +138,7 @@ export {
   openAvatarEditor,
   openCardCreator,
   openConfirmPopup,
-  updateUserInfo,
+  // updateUserInfo,
   createNewCard,
   updateAvatar,
 };

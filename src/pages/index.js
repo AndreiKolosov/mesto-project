@@ -20,7 +20,7 @@ import {
   openProfileEditor,
   openCardCreator,
   openAvatarEditor,
-  updateUserInfo,
+  //updateUserInfo,
   createNewCard,
   updateAvatar,
 } from '../components/modal.js';
@@ -38,6 +38,8 @@ const api = new Api(config);
 // первоначальня загрузка информации с сервера
 Promise.all([api.getUser(), api.getCards()])
   .then(([userData, cardsData]) => {
+    
+    //создание экземпляра пользователя и заполнение его полей
     const currentUser = new User(
       userData,
       userNameSelector,
@@ -46,6 +48,7 @@ Promise.all([api.getUser(), api.getCards()])
     );
     currentUser.setUserInfo();
 
+    //создание экземпляра контейнера для карточек
     const cardList = new Section(
       {
         data: cardsData,
@@ -67,18 +70,40 @@ Promise.all([api.getUser(), api.getCards()])
     cardList.renderItems();
     return [currentUser, cardList];
   })
-  .then(([currentUser, cardList]) => {
+  .then(([{userNameElement, userDescriptionElement, name, description}, cardList]) => {
     const userEditPopup = new PopupWithForm(
       '.popup_type_profile-editor',
-      handleSubmitForm,
-      handleOpenForm
+      updateUserInfo,
+      editUserInfo
     );
+    userEditPopup.setEventListeners();
+    //обработчик отправки формы, который передается в конструктор экземпляра класса
+    function updateUserInfo() {
+      this.submitButton.textContent = 'Сохранение...';
+      api.updateUser(this._popup.querySelector('#user-name').value, this._popup.querySelector('#user-description').value)
+    .then((res) => {
+      name = res.name;
+      description = res.about;
+      userNameElement.textContent = res.name;
+      userDescriptionElement.textContent = res.about;
+      //disableButton(saveUserBtn, validationConfig);
+      
+      this._close();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      this.submitButton.textContent = 'Сохранить';
+    });
+    }
 
-    function handleSubmitForm() {}
-    function handleOpenForm() {
-      this._popup.querySelector('#user-name').value = currentUser._userNameElement.textContent;
+    //функция обработчик открытия формы, которая передается в конструктор экземпляра класса 
+    function editUserInfo() {
+      this._popup.querySelector('#user-name').value = userNameElement.textContent;
       this._popup.querySelector('#user-description').value =
-        currentUser._userDescriptionElement.textContent;
+       userDescriptionElement.textContent;
+       console.log(this.formInputs);
       this._open();
     }
 
@@ -126,6 +151,6 @@ function checkLikeState(card, user) {
 enableValidation(validationConfig);
 
 addBtn.addEventListener('click', openCardCreator);
-userInfoForm.addEventListener('submit', updateUserInfo);
+//userInfoForm.addEventListener('submit', updateUserInfo);
 cardsForm.addEventListener('submit', createNewCard);
 avatarForm.addEventListener('submit', updateAvatar);
