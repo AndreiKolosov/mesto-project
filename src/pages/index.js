@@ -16,14 +16,14 @@ import {
   cardTemplateSelector,
   galleryContainerSelector,
 } from '../components/variables.js';
-import {
-  openProfileEditor,
-  openCardCreator,
-  openAvatarEditor,
-  //updateUserInfo,
-  createNewCard,
-  updateAvatar,
-} from '../components/modal.js';
+// import {
+//   openProfileEditor,
+//   openCardCreator,
+//   openAvatarEditor,
+//   //updateUserInfo,
+//   createNewCard,
+//   updateAvatar,
+// } from '../components/modal.js';
 import Api from '../components/api.js';
 import Section from '../components/section.js';
 import User from '../components/user.js';
@@ -31,7 +31,7 @@ import PopupWithForm from '../components/PopupWithForm.js';
 
 const editBtn = document.querySelector('.profile__edit-button'); // Кнопка редактирования профиля
 const addBtn = document.querySelector('.profile__add-button'); // Кнопка добавления карточки
-const avatarCangeBtn = document.querySelector('.profile__avatar-container'); // Кнопка смены аватара
+const avatarChangeBtn = document.querySelector('.profile__avatar-container'); // Кнопка смены аватара
 const popups = Array.from(document.querySelectorAll('.popup')); // Попапы
 const api = new Api(config);
 
@@ -47,6 +47,7 @@ Promise.all([api.getUser(), api.getCards()])
       userAvatarSelector
     );
     currentUser.setUserInfo();
+    currentUser.setUserAvatar();
 
     //создание экземпляра контейнера для карточек
     const cardList = new Section(
@@ -68,24 +69,33 @@ Promise.all([api.getUser(), api.getCards()])
       galleryContainerSelector
     );
     cardList.renderItems();
+
     return [currentUser, cardList];
   })
-  .then(([{userNameElement, userDescriptionElement, name, description}, cardList]) => {
+  .then(([currentUser,
+    cardList]) => {
     const userEditPopup = new PopupWithForm(
       '.popup_type_profile-editor',
       updateUserInfo,
-      editUserInfo
+      openUserEditPopup
     );
     userEditPopup.setEventListeners();
+
+    const avatarEditPopup = new PopupWithForm(
+      '.popup_type_avatar-editor',
+      updateAvatar,
+      openAvatarEditPopup
+    );
+    avatarEditPopup.setEventListeners();
+
     //обработчик отправки формы, который передается в конструктор экземпляра класса
     function updateUserInfo() {
       this.submitButton.textContent = 'Сохранение...';
       api.updateUser(this._popup.querySelector('#user-name').value, this._popup.querySelector('#user-description').value)
     .then((res) => {
-      name = res.name;
-      description = res.about;
-      userNameElement.textContent = res.name;
-      userDescriptionElement.textContent = res.about;
+      currentUser.name = res.name;
+      currentUser.description = res.about;
+      currentUser.setUserInfo();
       //disableButton(saveUserBtn, validationConfig);
       
       this._close();
@@ -96,19 +106,46 @@ Promise.all([api.getUser(), api.getCards()])
     .finally(() => {
       this.submitButton.textContent = 'Сохранить';
     });
-    }
+  }
 
-    //функция обработчик открытия формы, которая передается в конструктор экземпляра класса 
-    function editUserInfo() {
-      this._popup.querySelector('#user-name').value = userNameElement.textContent;
-      this._popup.querySelector('#user-description').value =
-       userDescriptionElement.textContent;
-       console.log(this.formInputs);
-      this._open();
-    }
+  //обработчик открытия формы, которая передается в конструктор экземпляра класса 
+  function openUserEditPopup() {
+    console.log('I work');
+    this._popup.querySelector('#user-name').value = currentUser.userNameElement.textContent;
+    this._popup.querySelector('#user-description').value =
+    currentUser.userDescriptionElement.textContent;
+    this._open();
+  }
 
-    avatarCangeBtn.addEventListener('click', openAvatarEditor);
-    // editBtn.addEventListener('click', openProfileEditor);
+  //обработчик отправки формы редактирования аватара
+  function updateAvatar() {
+    this.submitButton.textContent = 'Сохранение...';
+    api.updateAvatar(this._popup.querySelector('#user-avatar').value)
+    .then((res) => {
+      //console.log('current avatar' + avatar);
+      currentUser.avatar = res.avatar;
+      //console.log('new avatar' + avatar);
+      currentUser.setUserAvatar();
+      //console.log('last' + userAvatarElement.src);
+      this._close();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      this.submitButton.textContent = 'Сохранить';
+    });
+  }
+
+  function openAvatarEditPopup() {
+    this._form.reset();
+    this._open();
+  }
+
+    // ________________________________________________________________Вешаем слушатели
+    avatarChangeBtn.addEventListener('click', function () {
+      avatarEditPopup._handleOpenForm();
+    });
     editBtn.addEventListener('click', function () {
       userEditPopup._handleOpenForm();
     });
@@ -138,19 +175,11 @@ function checkLikeState(card, user) {
   return Boolean(card.likes.find((like) => like._id === user._id));
 }
 
-// popups.forEach((element) => {
-//   element.addEventListener('click', (evt) => {
-//     if (
-//       evt.target.classList.contains('popup__close-button') ||
-//       evt.target.classList.contains('popup')
-//     ) {
-//       closePopup(element);
-//     }
-//   });
-// });
+  
+
 enableValidation(validationConfig);
 
-addBtn.addEventListener('click', openCardCreator);
+//addBtn.addEventListener('click', openCardCreator);
 //userInfoForm.addEventListener('submit', updateUserInfo);
-cardsForm.addEventListener('submit', createNewCard);
-avatarForm.addEventListener('submit', updateAvatar);
+//cardsForm.addEventListener('submit', createNewCard);
+//avatarForm.addEventListener('submit', updateAvatar);

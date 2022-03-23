@@ -8,7 +8,7 @@ export default class PopupWithForm extends Popup {
     this._enableValidation = enableValidation;
     this._form = this._popup.querySelector('.form');
     this.submitButton = this._form.querySelector('.form__save-button');
-    this.formInputs = Array.from(this._form.querySelectorAll('.form__item'));
+    // this.formInputs = Array.from(this._form.querySelectorAll('.form__item'));
   }
 
   
@@ -18,4 +18,6 @@ export default class PopupWithForm extends Popup {
       this._handleSubmitForm();
     });
   }
+
+  
 }

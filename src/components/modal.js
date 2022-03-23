@@ -30,28 +30,28 @@ const saveAvatarBtn = avatarForm.querySelector('.form__save-button');
 const createCardBtn = cardsForm.querySelector('.form__save-button');
 const agreeBtn = confirmForm.querySelector('.form__save-button');
 
-function openConfirmPopup(cardId) {
-  confirmIdInput.value = cardId;
-  agreeBtn.removeAttribute('disabled');
-  agreeBtn.classList.remove('form__save-button_disabled');
-  // const handler = () => removeCard(confirmIdInput.value);
-  agreeBtn.addEventListener('click', removeCard);
-  openPopup(confirmPopup);
-}
+// function openConfirmPopup(cardId) {
+//   confirmIdInput.value = cardId;
+//   agreeBtn.removeAttribute('disabled');
+//   agreeBtn.classList.remove('form__save-button_disabled');
+//   // const handler = () => removeCard(confirmIdInput.value);
+//   agreeBtn.addEventListener('click', removeCard);
+//   openPopup(confirmPopup);
+// }
 
-function openProfileEditor() {
-  nameInput.value = userName.textContent;
-  descriptionInput.value = userDescription.textContent;
-  openPopup(userInfEditorPopup);
-}
+// function openProfileEditor() {
+//   nameInput.value = userName.textContent;
+//   descriptionInput.value = userDescription.textContent;
+//   openPopup(userInfEditorPopup);
+// }
 
-function openCardCreator() {
-  openPopup(cardAdderPopup);
-}
+// function openCardCreator() {
+//   openPopup(cardAdderPopup);
+// }
 
-function openAvatarEditor() {
-  openPopup(avatarEditorPopup);
-}
+// function openAvatarEditor() {
+//   openPopup(avatarEditorPopup);
+// }
 
 function expandPhoto(evt) {
   const image = evt.target.closest('.card__image'); // Элемент Img в карточке
@@ -132,13 +132,13 @@ function removeCard() {
     });
 }
 
-export {
-  // expandPhoto,
-  openProfileEditor,
-  openAvatarEditor,
-  openCardCreator,
-  openConfirmPopup,
-  // updateUserInfo,
-  createNewCard,
-  updateAvatar,
-};
+// export {
+//   // expandPhoto,
+//   // openProfileEditor,
+//   openAvatarEditor,
+//   openCardCreator,
+//   openConfirmPopup,
+//   // updateUserInfo,
+//   createNewCard,
+//   updateAvatar,
+// };

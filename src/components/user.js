@@ -6,7 +6,7 @@ export default class User {
         this._id = _id;
         this.userNameElement = document.querySelector(userNameSelector);
         this.userDescriptionElement = document.querySelector(userDescriptionSelector);
-        this._userAvatarElement = document.querySelector(userAvatarSelector);
+        this.userAvatarElement = document.querySelector(userAvatarSelector);
     }
 
     getUserId() {
@@ -16,7 +16,15 @@ export default class User {
     setUserInfo() {
         this.userNameElement.textContent = this.name;
         this.userDescriptionElement.textContent = this.about;
-        this._userAvatarElement.src = this.avatar;
+        
+    }
+
+    setUserAvatar = () => {
+       // console.log(this.avatar);
+        //console.log(this.userAvatarElement.src);
+        this.userAvatarElement.src = this.avatar;
+       // console.log(this.userAvatarElement.src);
+        
     }
 // Продумать поведение функции setInfo на случай вызова из кнопок редактирования пользователей и аватара
 
