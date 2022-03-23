@@ -38,7 +38,6 @@ const api = new Api(config);
 // первоначальня загрузка информации с сервера
 Promise.all([api.getUser(), api.getCards()])
   .then(([userData, cardsData]) => {
-    
     //создание экземпляра пользователя и заполнение его полей
     const currentUser = new User(
       userData,
@@ -72,8 +71,7 @@ Promise.all([api.getUser(), api.getCards()])
 
     return [currentUser, cardList];
   })
-  .then(([currentUser,
-    cardList]) => {
+  .then(([currentUser, cardList]) => {
     const userEditPopup = new PopupWithForm(
       '.popup_type_profile-editor',
       updateUserInfo,
@@ -88,61 +86,110 @@ Promise.all([api.getUser(), api.getCards()])
     );
     avatarEditPopup.setEventListeners();
 
+    const cardAdderPopup = new PopupWithForm(
+      '.popup_type_card-adder',
+      addNewCard,
+      openCardAdderPopup
+    );
+    cardAdderPopup.setEventListeners();
+
     //обработчик отправки формы, который передается в конструктор экземпляра класса
     function updateUserInfo() {
       this.submitButton.textContent = 'Сохранение...';
-      api.updateUser(this._popup.querySelector('#user-name').value, this._popup.querySelector('#user-description').value)
-    .then((res) => {
-      currentUser.name = res.name;
-      currentUser.description = res.about;
-      currentUser.setUserInfo();
-      //disableButton(saveUserBtn, validationConfig);
-      
-      this._close();
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      this.submitButton.textContent = 'Сохранить';
-    });
-  }
+      api
+        .updateUser(
+          this._popup.querySelector('#user-name').value,
+          this._popup.querySelector('#user-description').value
+        )
+        .then((res) => {
+          currentUser.name = res.name;
+          currentUser.description = res.about;
+          currentUser.setUserInfo();
+          //disableButton(saveUserBtn, validationConfig);
 
-  //обработчик открытия формы, которая передается в конструктор экземпляра класса 
-  function openUserEditPopup() {
-    console.log('I work');
-    this._popup.querySelector('#user-name').value = currentUser.userNameElement.textContent;
-    this._popup.querySelector('#user-description').value =
-    currentUser.userDescriptionElement.textContent;
-    this._open();
-  }
+          this._close();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          this.submitButton.textContent = 'Сохранить';
+        });
+    }
 
-  //обработчик отправки формы редактирования аватара
-  function updateAvatar() {
-    this.submitButton.textContent = 'Сохранение...';
-    api.updateAvatar(this._popup.querySelector('#user-avatar').value)
-    .then((res) => {
-      //console.log('current avatar' + avatar);
-      currentUser.avatar = res.avatar;
-      //console.log('new avatar' + avatar);
-      currentUser.setUserAvatar();
-      //console.log('last' + userAvatarElement.src);
-      this._close();
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      this.submitButton.textContent = 'Сохранить';
-    });
-  }
+    //обработчик открытия формы, которая передается в конструктор экземпляра класса
+    function openUserEditPopup() {
+      console.log('I work');
+      this._popup.querySelector('#user-name').value = currentUser.userNameElement.textContent;
+      this._popup.querySelector('#user-description').value =
+        currentUser.userDescriptionElement.textContent;
+      this._open();
+    }
 
-  function openAvatarEditPopup() {
-    this._form.reset();
-    this._open();
-  }
+    //обработчик отправки формы редактирования аватара
+    function updateAvatar() {
+      this.submitButton.textContent = 'Сохранение...';
+      api
+        .updateAvatar(this._popup.querySelector('#user-avatar').value)
+        .then((res) => {
+          //console.log('current avatar' + avatar);
+          currentUser.avatar = res.avatar;
+          //console.log('new avatar' + avatar);
+          currentUser.setUserAvatar();
+          //console.log('last' + userAvatarElement.src);
+          this._close();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          this.submitButton.textContent = 'Сохранить';
+        });
+    }
+
+    function openAvatarEditPopup() {
+      this._form.reset();
+      this._open();
+    }
+
+    function addNewCard() {
+      this.submitButton.textContent = 'Сохранение...';
+      api
+        .createCard(
+          this._popup.querySelector('#place-name').value,
+          this._popup.querySelector('#place-img-link').value
+        )
+        .then((res) => {
+          const likedByMe = checkLikeState(res, currentUser);
+          const card = new Card(
+            res,
+            cardTemplateSelector,
+            handleLikeClick,
+            handleDeleteClick,
+            likedByMe
+          );
+          const cardElement = card.createCardElement(currentUser._id);
+          cardList.setItem(cardElement);
+          this._close();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          this.submitButton.textContent = 'Сохранить';
+        });
+    }
+
+    function openCardAdderPopup() {
+      this._form.reset();
+      this._open();
+    }
 
     // ________________________________________________________________Вешаем слушатели
+
+    addBtn.addEventListener('click', function () {
+      cardAdderPopup._handleOpenForm();
+    });
     avatarChangeBtn.addEventListener('click', function () {
       avatarEditPopup._handleOpenForm();
     });
@@ -174,8 +221,6 @@ function handleDeleteClick() {}
 function checkLikeState(card, user) {
   return Boolean(card.likes.find((like) => like._id === user._id));
 }
-
-  
 
 enableValidation(validationConfig);
 

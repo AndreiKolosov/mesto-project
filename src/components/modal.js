@@ -17,7 +17,6 @@ import {
 } from '../components/variables.js';
 import { disableButton, validationConfig } from './validate.js';
 
-
 const photoSizeBig = document.querySelector('.popup__image'); // Фото в модальном окне
 const photoCaption = document.querySelector('.popup__img-caption'); // Подпись к фото в модальном окне
 const imagePopup = document.querySelector('.popup_type_img'); // Окно просмотра фотографии
@@ -80,39 +79,39 @@ function expandPhoto(evt) {
 //     });
 // }
 
-function updateAvatar() {
-  saveAvatarBtn.textContent = 'Сохранение...';
-  API.updateAvatar(avatarLinkInput.value)
-    .then((res) => {
-      userAvatar.src = res.avatar;
-      avatarForm.reset();
-      disableButton(saveAvatarBtn, validationConfig);
-      closePopup(avatarEditorPopup);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      saveAvatarBtn.textContent = 'Сохранить';
-    });
-}
+// function updateAvatar() {
+//   saveAvatarBtn.textContent = 'Сохранение...';
+//   API.updateAvatar(avatarLinkInput.value)
+//     .then((res) => {
+//       userAvatar.src = res.avatar;
+//       avatarForm.reset();
+//       disableButton(saveAvatarBtn, validationConfig);
+//       closePopup(avatarEditorPopup);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     })
+//     .finally(() => {
+//       saveAvatarBtn.textContent = 'Сохранить';
+//     });
+// }
 
-function createNewCard() {
-  createCardBtn.textContent = 'Сохранение...';
-  API.createCard(placeNameInput.value, placeLinkInput.value)
-    .then((res) => {
-      galleryContainer.prepend(createCardElement(res, res.owner._id));
-      cardsForm.reset();
-      disableButton(createCardBtn, validationConfig);
-      closePopup(cardAdderPopup);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      createCardBtn.textContent = 'Создать';
-    });
-}
+// function createNewCard() {
+//   createCardBtn.textContent = 'Сохранение...';
+//   API.createCard(placeNameInput.value, placeLinkInput.value)
+//     .then((res) => {
+//       galleryContainer.prepend(createCardElement(res, res.owner._id));
+//       cardsForm.reset();
+//       disableButton(createCardBtn, validationConfig);
+//       closePopup(cardAdderPopup);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     })
+//     .finally(() => {
+//       createCardBtn.textContent = 'Создать';
+//     });
+// }
 
 function removeCard() {
   const cardId = confirmIdInput.value;

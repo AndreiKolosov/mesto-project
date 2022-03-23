@@ -115,12 +115,12 @@ export default class Card {
 //   });
 // }
 
-function renderCards(cards, userId, container) {
-  cards.forEach((card) => {
-    const markedCard = createCardElement(card, userId);
+// function renderCards(cards, userId, container) {
+//   cards.forEach((card) => {
+//     const markedCard = createCardElement(card, userId);
 
-    container.append(markedCard);
-  });
-}
+//     container.append(markedCard);
+//   });
+// }
 
 // export { renderCards, createCardElement };
