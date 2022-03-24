@@ -28,6 +28,7 @@ import Api from '../components/api.js';
 import Section from '../components/section.js';
 import User from '../components/user.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithConfirm from '../components/PopupWithConfirm.js';
 
 const editBtn = document.querySelector('.profile__edit-button'); // Кнопка редактирования профиля
 const addBtn = document.querySelector('.profile__add-button'); // Кнопка добавления карточки
@@ -58,7 +59,7 @@ Promise.all([api.getUser(), api.getCards()])
             item,
             cardTemplateSelector,
             handleLikeClick,
-            handleDeleteClick,
+            openDeleteConfirmationPopup,
             likedByMe
           );
           const cardElement = card.createCardElement(currentUser._id);
@@ -201,6 +202,28 @@ Promise.all([api.getUser(), api.getCards()])
     console.log(err);
   });
 
+//обработчик подтверждения удаления карточки
+function handleDeleteConfirmation(card) {
+  //console.log(card);
+  this.confirmButton.textContent = 'Удаление...';
+  api.deleteCard(card.id)
+  .then((deleteMessage) => {
+    card._removeCard();
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+  .finally(() => {
+    this._close(card);
+    this.confirmButton.textContent = 'Да';
+  });
+}
+
+const deleteConfirmationPopup = new PopupWithConfirm(
+  '.popup_type_confirm',
+  handleDeleteConfirmation,
+);
+
 //функция обработчик нажатия на кнопку Like
 function handleLikeClick(likeBtn) {
   const action = this._selectLikeAction();
@@ -216,21 +239,17 @@ function handleLikeClick(likeBtn) {
     });
 }
 
-function handleDeleteClick() {
-  api.deleteCard(this.id)
-  .then((card) => {
-    this._removeCard();
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-}
 //функция проверки наличия нашего пользователя среди лайкнувших карточку
 function checkLikeState(card, user) {
   return Boolean(card.likes.find((like) => like._id === user._id));
 }
 
-enableValidation(validationConfig);
+const openDeleteConfirmationPopup = (card) => {
+  deleteConfirmationPopup.setEventListener(card);
+  deleteConfirmationPopup._open();
+}
+
+// enableValidation(validationConfig);
 
 //addBtn.addEventListener('click', openCardCreator);
 //userInfoForm.addEventListener('submit', updateUserInfo);

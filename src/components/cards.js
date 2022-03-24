@@ -76,14 +76,12 @@ export default class Card {
     }
   }
 
-  // _islikedByMe(userId) {
-  //   console.log(userId);
-  //   return Boolean(this.likes.find((like) => like._id === userId));
-  // }
-
   _setEventListeners(likeBtn, removeBtn, cardImg) {
     likeBtn.addEventListener('click', () => this._handleLikeClick(likeBtn));
-    removeBtn.addEventListener('click', () => this._handleDeleteClick())
+    removeBtn.addEventListener('click', () => {
+      const card = this;
+      
+      this._handleDeleteClick(card);});
   }
 
   _removeCard() {
