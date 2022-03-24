@@ -15,6 +15,7 @@ export default class Card {
     this.id = _id;
     this._cardTemplateSelector = cardTemplateSelector;
     this._handleLikeClick = handleLikeClick;
+    this._handleDeleteClick = handleDeleteClick;
     this._isLikedByMe = likedByMe;
   }
   _getElement() {
@@ -82,8 +83,14 @@ export default class Card {
 
   _setEventListeners(likeBtn, removeBtn, cardImg) {
     likeBtn.addEventListener('click', () => this._handleLikeClick(likeBtn));
+    removeBtn.addEventListener('click', () => this._handleDeleteClick())
+  }
+
+  _removeCard() {
+    this._element.remove();
   }
 }
+
 
 // const cardTemplate = document.querySelector('.card-template').content; // Шаблон карточки
 

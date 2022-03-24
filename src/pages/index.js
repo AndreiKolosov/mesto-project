@@ -216,7 +216,15 @@ function handleLikeClick(likeBtn) {
     });
 }
 
-function handleDeleteClick() {}
+function handleDeleteClick() {
+  api.deleteCard(this.id)
+  .then((card) => {
+    this._removeCard();
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+}
 //функция проверки наличия нашего пользователя среди лайкнувших карточку
 function checkLikeState(card, user) {
   return Boolean(card.likes.find((like) => like._id === user._id));
