@@ -46,15 +46,13 @@ export default class Card {
       this._renderLike(likeBtn);
     }
 
-    this._element.id = this._id; //УБРАТЬ ПРИСВАИВАНИЕ ID ЭЛЕМЕНТУ, Т.К. ОН УЖЕ ЕСТЬ В ЭКЗЕМПЛЯРЕ КЛАССА CARD
+    this._element.id = this._id; 
     cardName.textContent = this.name;
     cardImg.src = this.link;
     cardImg.alt = this.name;
 
     this._setEventListeners(likeBtn, removeBtn, cardImg);
-    // addLikeListener(likeBtn);
-    //cardImg.addEventListener('click', expandPhoto);
-    //removeBtn.addEventListener('click', () => openConfirmPopup(card._id));
+   
     return this._element;
   }
 

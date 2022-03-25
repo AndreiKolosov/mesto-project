@@ -1,4 +1,4 @@
-import Popup from './popup.js';
+import Popup from './Popup.js';
 
 export default class PopupWithConfirm extends Popup {
   constructor(popupSelector, handleConfirmation) {
@@ -15,18 +15,4 @@ export default class PopupWithConfirm extends Popup {
     console.log('here');
     this.confirmButton.removeEventListener('click', this.handleConfirmation.bind(this, card));
   }
-
-//   _open() {
-//     this._popup.classList.add('popup_opened');
-//     //   this._setClosureEventListeners();
-//   }
-
-  //   _setClosureEventListeners() {
-
-  //   }
-
-//   _close(card) {
-//     super._close();
-//     this.removeEventListener(card);
-//   }
 }

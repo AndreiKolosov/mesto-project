@@ -20,12 +20,6 @@ export default class User {
     }
 
     setUserAvatar = () => {
-       // console.log(this.avatar);
-        //console.log(this.userAvatarElement.src);
-        this.userAvatarElement.src = this.avatar;
-       // console.log(this.userAvatarElement.src);
-        
+       this.userAvatarElement.src = this.avatar;     
     }
-// Продумать поведение функции setInfo на случай вызова из кнопок редактирования пользователей и аватара
-
 }

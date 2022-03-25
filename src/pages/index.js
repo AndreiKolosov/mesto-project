@@ -1,26 +1,27 @@
 import '../pages/index.css';
-import Card from '../components/cards.js';
+import Card from '../components/Card.js';
+import Api from '../components/Api.js';
+import Section from '../components/Section.js';
+import User from '../components/User.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithConfirm from '../components/PopupWithConfirm.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import FormValidator from '../components/FormValidator.js';
 import {
-  config,
+  apiConfig,
   userNameSelector,
   userAvatarSelector,
   userDescriptionSelector,
   cardTemplateSelector,
   galleryContainerSelector,
   validationConfig,
-} from '../components/variables.js';
-import Api from '../components/api.js';
-import Section from '../components/section.js';
-import User from '../components/user.js';
-import PopupWithForm from '../components/PopupWithForm.js';
-import PopupWithConfirm from '../components/PopupWithConfirm.js';
-import PopupWithImage from '../components/PopupWithImage.js';
-import FormValidator from '../components/FormValidator.js';
+  editBtn,
+  addBtn,
+  avatarChangeBtn,
+} from '../utils/variables.js';
 
-const editBtn = document.querySelector('.profile__edit-button'); // Кнопка редактирования профиля
-const addBtn = document.querySelector('.profile__add-button'); // Кнопка добавления карточки
-const avatarChangeBtn = document.querySelector('.profile__avatar-container'); // Кнопка смены аватара
-const api = new Api(config);
+
+const api = new Api(apiConfig);
 const imagePopup = new PopupWithImage('.popup_type_img', openImagePopup);
 const formValidator = new FormValidator(validationConfig, resetFormValidity);
 const deleteConfirmationPopup = new PopupWithConfirm(
@@ -66,20 +67,21 @@ Promise.all([api.getUser(), api.getCards()])
     return [currentUser, cardList];
   })
   .then(([currentUser, cardList]) => {
+    //создание инстанса попапа редактирования данных юзера
     const userEditPopup = new PopupWithForm(
       '.popup_type_profile-editor',
       updateUserInfo,
       openUserEditPopup
     );
     userEditPopup.setEventListeners();
-
+    //создание инстанса попапа редактирования аватара
     const avatarEditPopup = new PopupWithForm(
       '.popup_type_avatar-editor',
       updateAvatar,
       openAvatarEditPopup
     );
     avatarEditPopup.setEventListeners();
-
+    //создание инстанса попапа добавления карточки
     const cardAdderPopup = new PopupWithForm(
       '.popup_type_card-adder',
       addNewCard,
@@ -99,8 +101,6 @@ Promise.all([api.getUser(), api.getCards()])
           currentUser.name = res.name;
           currentUser.description = res.about;
           currentUser.setUserInfo();
-          //disableButton(saveUserBtn, validationConfig);
-
           this._close();
         })
         .catch((err) => {
@@ -126,11 +126,8 @@ Promise.all([api.getUser(), api.getCards()])
       api
         .updateAvatar(this._popup.querySelector('#user-avatar').value)
         .then((res) => {
-          //console.log('current avatar' + avatar);
           currentUser.avatar = res.avatar;
-          //console.log('new avatar' + avatar);
           currentUser.setUserAvatar();
-          //console.log('last' + userAvatarElement.src);
           this._close();
         })
         .catch((err) => {
@@ -168,7 +165,6 @@ Promise.all([api.getUser(), api.getCards()])
           cardList.setItem(cardElement);
           this._close();
         })
-
         .catch((err) => {
           console.log(err);
         })
@@ -183,7 +179,7 @@ Promise.all([api.getUser(), api.getCards()])
       this._open();
     }
 
-    // ________________________________________________________________Вешаем слушатели
+    // Вешаем слушатели
 
     addBtn.addEventListener('click', function () {
       cardAdderPopup._handleOpenForm();
@@ -201,7 +197,6 @@ Promise.all([api.getUser(), api.getCards()])
 
 //обработчик подтверждения удаления карточки
 function handleDeleteConfirmation(card) {
-  //console.log(card);
   this.confirmButton.textContent = 'Удаление...';
   api
     .deleteCard(card.id)
@@ -243,7 +238,7 @@ const openDeleteConfirmationPopup = (card) => {
   deleteConfirmationPopup._open();
 };
 
-//___________________________________________________________Открытие модального окна просмотра формы
+//Открытие модального окна просмотра картинки
 function openImage(card) {
   imagePopup.handleOpenPopup(card);
 }
@@ -258,10 +253,7 @@ function openImagePopup(card) {
 //сброс сообщений об ошибках валидации
 function resetFormValidity(openPopup) {
   const formElement = openPopup.querySelector(this._formSelector);
-  //const errorElement = openPopup.querySelector(`.${inputElement.id}_error`);
-
   const inputList = Array.from(formElement.querySelectorAll(this._inputSelector));
-  // const buttonElement = formElement.querySelector(this._buttonSelector);
   inputList.forEach((inputElement) => {
     this._hideInputError(inputElement, openPopup.querySelector(`.${inputElement.id}_error`));
   });
