@@ -1,5 +1,3 @@
-// import { expandPhoto, openConfirmPopup } from '../components/modal.js';
-
 export default class Card {
   constructor(
     { likes, link, name, owner, _id },
@@ -93,44 +91,3 @@ export default class Card {
     this._element.remove();
   }
 }
-
-
-// const cardTemplate = document.querySelector('.card-template').content; // Шаблон карточки
-
-// !!! Попробовать вынести функции науржу
-// function addLikeListener(btn) {
-//   const card = btn.closest('.card');
-//   const likeCounter = card.querySelector('.card__like-counter');
-
-//   btn.addEventListener('click', () => {
-//     if (btn.classList.contains('card__like-button_active')) {
-//       API.removeLike(card.id)
-//         .then((res) => {
-//           likeCounter.textContent = res.likes.length;
-//           btn.classList.remove('card__like-button_active');
-//         })
-//         .catch((err) => {
-//           console.log(err);
-//         });
-//     } else {
-//       API.addLike(card.id)
-//         .then((res) => {
-//           likeCounter.textContent = res.likes.length;
-//           btn.classList.add('card__like-button_active');
-//         })
-//         .catch((err) => {
-//           console.log(err);
-//         });
-//     }
-//   });
-// }
-
-// function renderCards(cards, userId, container) {
-//   cards.forEach((card) => {
-//     const markedCard = createCardElement(card, userId);
-
-//     container.append(markedCard);
-//   });
-// }
-
-// export { renderCards, createCardElement };

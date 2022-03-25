@@ -1,41 +1,32 @@
 import '../pages/index.css';
-import { enableValidation, validationConfig } from '../components/validate.js';
 import Card from '../components/cards.js';
-//import { closePopup } from '../components/utils';
 import {
-  cardsForm,
-  userInfoForm,
-  avatarForm,
-  userName,
-  userDescription,
-  userAvatar,
   config,
   userNameSelector,
   userAvatarSelector,
   userDescriptionSelector,
   cardTemplateSelector,
   galleryContainerSelector,
+  validationConfig,
 } from '../components/variables.js';
-// import {
-//   openProfileEditor,
-//   openCardCreator,
-//   openAvatarEditor,
-//   //updateUserInfo,
-//   createNewCard,
-//   updateAvatar,
-// } from '../components/modal.js';
 import Api from '../components/api.js';
 import Section from '../components/section.js';
 import User from '../components/user.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithConfirm from '../components/PopupWithConfirm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import FormValidator from '../components/FormValidator.js';
 
 const editBtn = document.querySelector('.profile__edit-button'); // Кнопка редактирования профиля
 const addBtn = document.querySelector('.profile__add-button'); // Кнопка добавления карточки
 const avatarChangeBtn = document.querySelector('.profile__avatar-container'); // Кнопка смены аватара
-const popups = Array.from(document.querySelectorAll('.popup')); // Попапы
 const api = new Api(config);
+const imagePopup = new PopupWithImage('.popup_type_img', openImagePopup);
+const formValidator = new FormValidator(validationConfig, resetFormValidity);
+const deleteConfirmationPopup = new PopupWithConfirm(
+  '.popup_type_confirm',
+  handleDeleteConfirmation
+);
 
 // первоначальня загрузка информации с сервера
 Promise.all([api.getUser(), api.getCards()])
@@ -89,7 +80,6 @@ Promise.all([api.getUser(), api.getCards()])
     );
     avatarEditPopup.setEventListeners();
 
-
     const cardAdderPopup = new PopupWithForm(
       '.popup_type_card-adder',
       addNewCard,
@@ -123,7 +113,7 @@ Promise.all([api.getUser(), api.getCards()])
 
     //обработчик открытия формы, которая передается в конструктор экземпляра класса
     function openUserEditPopup() {
-      console.log('I work');
+      formValidator.resetValidity(this._popup);
       this._popup.querySelector('#user-name').value = currentUser.userNameElement.textContent;
       this._popup.querySelector('#user-description').value =
         currentUser.userDescriptionElement.textContent;
@@ -153,6 +143,7 @@ Promise.all([api.getUser(), api.getCards()])
 
     function openAvatarEditPopup() {
       this._form.reset();
+      formValidator.resetValidity(this._popup);
       this._open();
     }
 
@@ -169,7 +160,8 @@ Promise.all([api.getUser(), api.getCards()])
             res,
             cardTemplateSelector,
             handleLikeClick,
-            handleDeleteClick,
+            openDeleteConfirmationPopup,
+            openImage,
             likedByMe
           );
           const cardElement = card.createCardElement(currentUser._id);
@@ -177,7 +169,6 @@ Promise.all([api.getUser(), api.getCards()])
           this._close();
         })
 
-        
         .catch((err) => {
           console.log(err);
         })
@@ -188,10 +179,9 @@ Promise.all([api.getUser(), api.getCards()])
 
     function openCardAdderPopup() {
       this._form.reset();
+      formValidator.resetValidity(this._popup);
       this._open();
     }
-
-    
 
     // ________________________________________________________________Вешаем слушатели
 
@@ -208,9 +198,6 @@ Promise.all([api.getUser(), api.getCards()])
   .catch((err) => {
     console.log(err);
   });
-//создание инстанса попапа картинки
-  const imagePopup = new PopupWithImage('.popup_type_img', openImagePopup);
-
 
 //обработчик подтверждения удаления карточки
 function handleDeleteConfirmation(card) {
@@ -230,10 +217,6 @@ function handleDeleteConfirmation(card) {
     });
 }
 
-const deleteConfirmationPopup = new PopupWithConfirm(
-  '.popup_type_confirm',
-  handleDeleteConfirmation
-);
 
 //функция обработчик нажатия на кнопку Like
 function handleLikeClick(likeBtn) {
@@ -272,9 +255,17 @@ function openImagePopup(card) {
   this._open();
 }
 
-// enableValidation(validationConfig);
+//сброс сообщений об ошибках валидации
+function resetFormValidity(openPopup) {
+  const formElement = openPopup.querySelector(this._formSelector);
+  //const errorElement = openPopup.querySelector(`.${inputElement.id}_error`);
 
-//addBtn.addEventListener('click', openCardCreator);
-//userInfoForm.addEventListener('submit', updateUserInfo);
-//cardsForm.addEventListener('submit', createNewCard);
-//avatarForm.addEventListener('submit', updateAvatar);
+  const inputList = Array.from(formElement.querySelectorAll(this._inputSelector));
+  // const buttonElement = formElement.querySelector(this._buttonSelector);
+  inputList.forEach((inputElement) => {
+    this._hideInputError(inputElement, openPopup.querySelector(`.${inputElement.id}_error`));
+  });
+  this._toggleButtonState(formElement, inputList);
+}
+
+formValidator.enableValidation();

@@ -29,6 +29,15 @@ const config = {
   },
 };
 
+const validationConfig = {
+  formSelector: '.form',
+  inputSelector: '.form__item',
+  buttonSelector: '.form__save-button',
+  buttonInactiveClass: 'form__save-button_disabled',
+  errorElementClass: 'form__item-error_active',
+  inputErrorClass: 'form__item_type_error',
+};
+
 export {
   userName,
   userDescription,
@@ -49,4 +58,5 @@ export {
   cardTemplateSelector,
   galleryContainerSelector,
   config,
+  validationConfig,
 };
