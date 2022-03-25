@@ -6,6 +6,7 @@ export default class Card {
     cardTemplateSelector,
     handleLikeClick,
     handleDeleteClick,
+    handleOpenImage,
     likedByMe
   ) {
     this.likes = likes;
@@ -16,6 +17,7 @@ export default class Card {
     this._cardTemplateSelector = cardTemplateSelector;
     this._handleLikeClick = handleLikeClick;
     this._handleDeleteClick = handleDeleteClick;
+    this._handleOpenImage = handleOpenImage;
     this._isLikedByMe = likedByMe;
   }
   _getElement() {
@@ -77,11 +79,14 @@ export default class Card {
   }
 
   _setEventListeners(likeBtn, removeBtn, cardImg) {
+    const card = this;
     likeBtn.addEventListener('click', () => this._handleLikeClick(likeBtn));
     removeBtn.addEventListener('click', () => {
-      const card = this;
-      
-      this._handleDeleteClick(card);});
+      this._handleDeleteClick(card);
+    });
+    cardImg.addEventListener('click', () => {
+      this._handleOpenImage(card);
+    });
   }
 
   _removeCard() {
