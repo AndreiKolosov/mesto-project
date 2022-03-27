@@ -9,9 +9,9 @@ export default class Section {
         this._container.prepend(element);
     }
 
-    renderItems() {
+    renderItems(user) {
         this._renderedItems.reverse().forEach((item) => {
-            this._renderer(item);
+            this._renderer(item, user);
         });
     }
 }

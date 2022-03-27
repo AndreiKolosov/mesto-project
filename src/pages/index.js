@@ -2,7 +2,7 @@ import '../pages/index.css';
 import Card from '../components/Card.js';
 import Api from '../components/Api.js';
 import Section from '../components/Section.js';
-import User from '../components/User.js';
+import UserInfo from '../components/UserInfo.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithConfirm from '../components/PopupWithConfirm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
@@ -28,12 +28,34 @@ const deleteConfirmationPopup = new PopupWithConfirm(
   '.popup_type_confirm',
   handleDeleteConfirmation
 );
+deleteConfirmationPopup.setEventListener();
+
+const cardList = new Section(
+  {
+    //data: cardsData,
+    renderer: (item, user) => {
+      const likedByMe = checkLikeState(item, user);
+      const card = new Card(
+        item,
+        cardTemplateSelector,
+        handleLikeClick,
+        openDeleteConfirmationPopup,
+        openImage,
+        likedByMe
+      );
+      const cardElement = card.createCardElement(user._id);
+      cardList.setItem(cardElement);
+    },
+  },
+  galleryContainerSelector
+);
 
 // первоначальня загрузка информации с сервера
 Promise.all([api.getUser(), api.getCards()])
   .then(([userData, cardsData]) => {
     //создание экземпляра пользователя и заполнение его полей
-    const currentUser = new User(
+    cardList._renderedItems = cardsData;
+    const currentUser = new UserInfo(
       userData,
       userNameSelector,
       userDescriptionSelector,
@@ -43,26 +65,26 @@ Promise.all([api.getUser(), api.getCards()])
     currentUser.setUserAvatar();
 
     //создание экземпляра контейнера для карточек
-    const cardList = new Section(
-      {
-        data: cardsData,
-        renderer: (item) => {
-          const likedByMe = checkLikeState(item, userData);
-          const card = new Card(
-            item,
-            cardTemplateSelector,
-            handleLikeClick,
-            openDeleteConfirmationPopup,
-            openImage,
-            likedByMe
-          );
-          const cardElement = card.createCardElement(currentUser._id);
-          cardList.setItem(cardElement);
-        },
-      },
-      galleryContainerSelector
-    );
-    cardList.renderItems();
+    // const cardList = new Section(
+    //   {
+    //     data: cardsData,
+    //     renderer: (item) => {
+    //       const likedByMe = checkLikeState(item, userData);
+    //       const card = new Card(
+    //         item,
+    //         cardTemplateSelector,
+    //         handleLikeClick,
+    //         openDeleteConfirmationPopup,
+    //         openImage,
+    //         likedByMe
+    //       );
+    //       const cardElement = card.createCardElement(currentUser._id);
+    //       cardList.setItem(cardElement);
+    //     },
+    //   },
+    //   galleryContainerSelector
+    // );
+    cardList.renderItems(currentUser);
 
     return [currentUser, cardList];
   })
@@ -196,18 +218,19 @@ Promise.all([api.getUser(), api.getCards()])
   });
 
 //обработчик подтверждения удаления карточки
-function handleDeleteConfirmation(card) {
+function handleDeleteConfirmation() {
   this.confirmButton.textContent = 'Удаление...';
   api
-    .deleteCard(card.id)
+    .deleteCard(this.cardId)
     .then((deleteMessage) => {
-      card._removeCard();
+      const card = document.getElementById(this.cardId);
+      card.remove();
     })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
-      this._close(card);
+      this._close();
       this.confirmButton.textContent = 'Да';
     });
 }
@@ -234,9 +257,12 @@ function checkLikeState(card, user) {
 }
 
 const openDeleteConfirmationPopup = (card) => {
-  deleteConfirmationPopup.setEventListener(card);
+  deleteConfirmationPopup.cardId = card.id;
   deleteConfirmationPopup._open();
 };
+
+
+
 
 //Открытие модального окна просмотра картинки
 function openImage(card) {

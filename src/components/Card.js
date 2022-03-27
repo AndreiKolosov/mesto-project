@@ -46,7 +46,7 @@ export default class Card {
       this._renderLike(likeBtn);
     }
 
-    this._element.id = this._id; 
+    this._element.id = this.id; 
     cardName.textContent = this.name;
     cardImg.src = this.link;
     cardImg.alt = this.name;
