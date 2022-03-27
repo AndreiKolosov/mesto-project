@@ -1,14 +1,7 @@
 export default class FormValidator {
   constructor(
-    {
-      formSelector,
-      inputSelector,
-      buttonSelector,
-      buttonInactiveClass,
-      errorElementClass,
-      inputErrorClass,
-    },
-    resetValidity
+    formSelector,
+    { inputSelector, buttonSelector, buttonInactiveClass, errorElementClass, inputErrorClass }
   ) {
     this._formSelector = formSelector;
     this._inputSelector = inputSelector;
@@ -16,17 +9,23 @@ export default class FormValidator {
     this._buttonInactiveClass = buttonInactiveClass;
     this._errorElementClass = errorElementClass;
     this._inputErrorClass = inputErrorClass;
-    this.resetValidity = resetValidity;
   }
   enableValidation() {
-    const formList = Array.from(document.querySelectorAll(this._formSelector));
+    const form = document.querySelector('#' + this._formSelector);
 
-    formList.forEach((formElement) => {
-      formElement.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-      });
-      this._setEventListeners(formElement);
+    form.addEventListener('submit', (evt) => {
+      evt.preventDefault();
     });
+    this._setEventListeners(form);
+  }
+
+  resetValidity() {
+    const form = document.querySelector('#' + this._formSelector);
+    const inputList = Array.from(form.querySelectorAll(this._inputSelector));
+    inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement, form.querySelector(`.${inputElement.id}_error`));
+    });
+    this._toggleButtonState(form, inputList);
   }
 
   _setEventListeners(formElement) {
@@ -87,6 +86,3 @@ export default class FormValidator {
     buttonElement.disabled = false;
   }
 }
-
-
-
