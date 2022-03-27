@@ -22,16 +22,13 @@ import {
 
 const api = new Api(apiConfig);
 const imagePopup = new PopupWithImage('.popup_type_img', openImagePopup);
-const cardAddFormValidator = new FormValidator('card-form', validationConfig);
-const profileEditFormValidator = new FormValidator('editor-form', validationConfig);
-const avatarEditFormValidator = new FormValidator('avatar-form', validationConfig);
-
 const deleteConfirmationPopup = new PopupWithConfirm(
   '.popup_type_confirm',
   handleDeleteConfirmation
 );
-deleteConfirmationPopup.setEventListener();
-
+const cardAddFormValidator = new FormValidator('card-form', validationConfig);
+const profileEditFormValidator = new FormValidator('editor-form', validationConfig);
+const avatarEditFormValidator = new FormValidator('avatar-form', validationConfig);
 const cardList = new Section(
   {
     //data: cardsData,
@@ -65,7 +62,6 @@ Promise.all([api.getUser(), api.getCards()])
     );
     currentUser.setUserInfo();
     currentUser.setUserAvatar();
-
     cardList.renderItems(currentUser);
 
     return [currentUser, cardList];
@@ -118,9 +114,9 @@ Promise.all([api.getUser(), api.getCards()])
     //обработчик открытия формы, которая передается в конструктор экземпляра класса
     function openUserEditPopup() {
       profileEditFormValidator.resetValidity();
-      this._popup.querySelector('#user-name').value = currentUser.userNameElement.textContent;
+      this._popup.querySelector('#user-name').value = currentUser.getUserInfo().userName;
       this._popup.querySelector('#user-description').value =
-        currentUser.userDescriptionElement.textContent;
+        currentUser.getUserInfo().userDescription;
       this._open();
     }
 
@@ -184,7 +180,6 @@ Promise.all([api.getUser(), api.getCards()])
     }
 
     // Вешаем слушатели
-
     addBtn.addEventListener('click', function () {
       cardAdderPopup._handleOpenForm();
     });
@@ -236,7 +231,7 @@ function handleLikeClick(likeBtn) {
 function checkLikeState(card, user) {
   return Boolean(card.likes.find((like) => like._id === user._id));
 }
-
+//обработчик нажатия на кнопку удаления карточки
 const openDeleteConfirmationPopup = (card) => {
   deleteConfirmationPopup.cardId = card.id;
   deleteConfirmationPopup._open();
@@ -254,6 +249,7 @@ function openImagePopup(card) {
   this._open();
 }
 
+deleteConfirmationPopup.setEventListener();
 cardAddFormValidator.enableValidation();
 profileEditFormValidator.enableValidation();
 avatarEditFormValidator.enableValidation();
