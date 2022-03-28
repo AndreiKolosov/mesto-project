@@ -49,7 +49,7 @@
 
 Ренат Ибрагимов 2022г
 
-- [e-mail] (bik00014@gmail.com)
-- [GitHub] (https://github.com/SmthOfValue)
+- [e-mail](bik00014@gmail.com)
+- [GitHub](https://github.com/SmthOfValue)
 
 [Наверх](#top)
