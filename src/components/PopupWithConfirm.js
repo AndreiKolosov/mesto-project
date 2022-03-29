@@ -8,6 +8,8 @@ export default class PopupWithConfirm extends Popup {
     this.cardId = '';
   }
 
+  
+
   setEventListener() {
     this.confirmButton.addEventListener('click', this.handleConfirmation.bind(this, this.cardId));
   }

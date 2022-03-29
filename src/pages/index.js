@@ -21,7 +21,7 @@ import {
 } from '../utils/variables.js';
 
 const api = new Api(apiConfig);
-const imagePopup = new PopupWithImage('.popup_type_img', openImagePopup);
+const imagePopup = new PopupWithImage('.popup_type_img');
 const deleteConfirmationPopup = new PopupWithConfirm(
   '.popup_type_confirm',
   handleDeleteConfirmation
@@ -94,14 +94,14 @@ Promise.all([api.getUser(), api.getCards()])
       this.submitButton.textContent = 'Сохранение...';
       api
         .updateUser(
-          this._popup.querySelector('#user-name').value,
-          this._popup.querySelector('#user-description').value
+          this._popup.querySelector('#name').value,
+          this._popup.querySelector('#about').value
         )
         .then((res) => {
           currentUser.name = res.name;
           currentUser.description = res.about;
           currentUser.setUserInfo();
-          this._close();
+          this.close();
         })
         .catch((err) => {
           console.log(err);
@@ -114,10 +114,8 @@ Promise.all([api.getUser(), api.getCards()])
     //обработчик открытия формы, которая передается в конструктор экземпляра класса
     function openUserEditPopup() {
       profileEditFormValidator.resetValidity();
-      this._popup.querySelector('#user-name').value = currentUser.getUserInfo().userName;
-      this._popup.querySelector('#user-description').value =
-        currentUser.getUserInfo().userDescription;
-      this._open();
+      userEditPopup.setInputValues(currentUser);
+      this.open();
     }
 
     //обработчик отправки формы редактирования аватара
@@ -128,7 +126,7 @@ Promise.all([api.getUser(), api.getCards()])
         .then((res) => {
           currentUser.avatar = res.avatar;
           currentUser.setUserAvatar();
-          this._close();
+          this.close();
         })
         .catch((err) => {
           console.log(err);
@@ -139,9 +137,8 @@ Promise.all([api.getUser(), api.getCards()])
     }
 
     function openAvatarEditPopup() {
-      this._form.reset();
       avatarEditFormValidator.resetValidity();
-      this._open();
+      this.open();
     }
 
     function addNewCard() {
@@ -163,7 +160,7 @@ Promise.all([api.getUser(), api.getCards()])
           );
           const cardElement = card.createCardElement(currentUser._id);
           cardList.setItem(cardElement);
-          this._close();
+          this.close();
         })
         .catch((err) => {
           console.log(err);
@@ -174,9 +171,8 @@ Promise.all([api.getUser(), api.getCards()])
     }
 
     function openCardAdderPopup() {
-      this._form.reset();
       cardAddFormValidator.resetValidity();
-      this._open();
+      this.open();
     }
 
     // Вешаем слушатели
@@ -207,19 +203,19 @@ function handleDeleteConfirmation() {
       console.log(err);
     })
     .finally(() => {
-      this._close();
+      this.close();
       this.confirmButton.textContent = 'Да';
     });
 }
 
 //функция обработчик нажатия на кнопку Like
-function handleLikeClick(likeBtn) {
-  const action = this._selectLikeAction();
+function handleLikeClick(card) {
+  const action = card.selectLikeAction();
   api
-    .setLike(this.id, action)
+    .setLike(card.getId(), action)
     .then((card) => {
       this._renderLikeCount(card);
-      this._renderLike(likeBtn);
+      this._renderLike();
       this._isLikedByMe = !this._isLikedByMe;
     })
     .catch((err) => {
@@ -233,21 +229,21 @@ function checkLikeState(card, user) {
 }
 //обработчик нажатия на кнопку удаления карточки
 const openDeleteConfirmationPopup = (card) => {
-  deleteConfirmationPopup.cardId = card.id;
-  deleteConfirmationPopup._open();
+  deleteConfirmationPopup.cardId = card.getId();
+  deleteConfirmationPopup.open();
 };
 
 //Открытие модального окна просмотра картинки
 function openImage(card) {
-  imagePopup.handleOpenPopup(card);
+  imagePopup.open(card);
 }
 //метод объекта PopupWithImage, который наполняет разметку попапа картинки и открывает его
-function openImagePopup(card) {
-  this._popup.querySelector('.popup__image').src = card.link;
-  this._popup.querySelector('.popup__image').alt = card.name;
-  this._popup.querySelector('.popup__img-caption').textContent = card.name;
-  this._open();
-}
+// function openImagePopup(card) {
+//   this._popup.querySelector('.popup__image').src = card.link;
+//   this._popup.querySelector('.popup__image').alt = card.name;
+//   this._popup.querySelector('.popup__img-caption').textContent = card.name;
+//   this.open();
+// }
 
 deleteConfirmationPopup.setEventListener();
 cardAddFormValidator.enableValidation();
