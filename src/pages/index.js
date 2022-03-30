@@ -25,14 +25,31 @@ const imagePopup = new PopupWithImage('.popup_type_img');
 const deleteConfirmationPopup = new PopupWithConfirm(
   '.popup_type_confirm',
   handleDeleteConfirmation
-);
-const cardAddFormValidator = new FormValidator('card-form', validationConfig);
-const profileEditFormValidator = new FormValidator('editor-form', validationConfig);
-const avatarEditFormValidator = new FormValidator('avatar-form', validationConfig);
+  );
+
+const formValidators = {};
+
+// Включение валидации
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(formElement, config);
+    const formName = formElement.getAttribute('name');
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+enableValidation(validationConfig); 
+
+const currentUser = new UserInfo(
+  userNameSelector,
+  userDescriptionSelector,
+  userAvatarSelector
+  );
+
 const cardList = new Section(
   {
-    //data: cardsData,
-    renderer: (item, user) => {
+    createItem: (item, user) => {
       const likedByMe = checkLikeState(item, user);
       const card = new Card(
         item,
@@ -42,181 +59,121 @@ const cardList = new Section(
         openImage,
         likedByMe
       );
-      const cardElement = card.createCardElement(user._id);
-      cardList.setItem(cardElement);
+      const cardElement = card.createCardElement(user.id);
+      return cardElement;
     },
   },
   galleryContainerSelector
+); 
+
+//создание инстанса попапа редактирования данных юзера
+const userEditPopup = new PopupWithForm(
+  '.popup_type_profile-editor',
+   updateUserInfo,
 );
 
+//создание инстанса попапа редактирования аватара
+const avatarEditPopup = new PopupWithForm(
+  '.popup_type_avatar-editor',
+  updateAvatar,
+);
+
+//создание инстанса попапа добавления карточки
+const cardAdderPopup = new PopupWithForm(
+  '.popup_type_card-adder',
+   addNewCard,
+);
+      
 // первоначальня загрузка информации с сервера
 Promise.all([api.getUser(), api.getCards()])
   .then(([userData, cardsData]) => {
-    //создание экземпляра пользователя и заполнение его полей
-    cardList._renderedItems = cardsData;
-    const currentUser = new UserInfo(
-      userData,
-      userNameSelector,
-      userDescriptionSelector,
-      userAvatarSelector
-    );
-    currentUser.setUserInfo();
-    currentUser.setUserAvatar();
+    cardList.renderedItems = cardsData;
+    currentUser.setUserInfo(userData);
     cardList.renderItems(currentUser);
-
     return [currentUser, cardList];
-  })
-  .then(([currentUser, cardList]) => {
-    //создание инстанса попапа редактирования данных юзера
-    const userEditPopup = new PopupWithForm(
-      '.popup_type_profile-editor',
-      updateUserInfo,
-      openUserEditPopup
-    );
-    userEditPopup.setEventListeners();
-    //создание инстанса попапа редактирования аватара
-    const avatarEditPopup = new PopupWithForm(
-      '.popup_type_avatar-editor',
-      updateAvatar,
-      openAvatarEditPopup
-    );
-    avatarEditPopup.setEventListeners();
-    //создание инстанса попапа добавления карточки
-    const cardAdderPopup = new PopupWithForm(
-      '.popup_type_card-adder',
-      addNewCard,
-      openCardAdderPopup
-    );
-    cardAdderPopup.setEventListeners();
-
-    //обработчик отправки формы, который передается в конструктор экземпляра класса
-    function updateUserInfo() {
-      this.submitButton.textContent = 'Сохранение...';
-      api
-        .updateUser(
-          this._popup.querySelector('#name').value,
-          this._popup.querySelector('#about').value
-        )
-        .then((res) => {
-          currentUser.name = res.name;
-          currentUser.description = res.about;
-          currentUser.setUserInfo();
-          this.close();
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          this.submitButton.textContent = 'Сохранить';
-        });
-    }
-
-    //обработчик открытия формы, которая передается в конструктор экземпляра класса
-    function openUserEditPopup() {
-      profileEditFormValidator.resetValidity();
-      userEditPopup.setInputValues(currentUser);
-      this.open();
-    }
-
-    //обработчик отправки формы редактирования аватара
-    function updateAvatar() {
-      this.submitButton.textContent = 'Сохранение...';
-      api
-        .updateAvatar(this._popup.querySelector('#user-avatar').value)
-        .then((res) => {
-          currentUser.avatar = res.avatar;
-          currentUser.setUserAvatar();
-          this.close();
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          this.submitButton.textContent = 'Сохранить';
-        });
-    }
-
-    function openAvatarEditPopup() {
-      avatarEditFormValidator.resetValidity();
-      this.open();
-    }
-
-    function addNewCard() {
-      this.submitButton.textContent = 'Сохранение...';
-      api
-        .createCard(
-          this._popup.querySelector('#place-name').value,
-          this._popup.querySelector('#place-img-link').value
-        )
-        .then((res) => {
-          const likedByMe = checkLikeState(res, currentUser);
-          const card = new Card(
-            res,
-            cardTemplateSelector,
-            handleLikeClick,
-            openDeleteConfirmationPopup,
-            openImage,
-            likedByMe
-          );
-          const cardElement = card.createCardElement(currentUser._id);
-          cardList.setItem(cardElement);
-          this.close();
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          this.submitButton.textContent = 'Сохранить';
-        });
-    }
-
-    function openCardAdderPopup() {
-      cardAddFormValidator.resetValidity();
-      this.open();
-    }
-
-    // Вешаем слушатели
-    addBtn.addEventListener('click', function () {
-      cardAdderPopup._handleOpenForm();
-    });
-    avatarChangeBtn.addEventListener('click', function () {
-      avatarEditPopup._handleOpenForm();
-    });
-    editBtn.addEventListener('click', function () {
-      userEditPopup._handleOpenForm();
-    });
-  })
+   })
   .catch((err) => {
     console.log(err);
   });
 
-//обработчик подтверждения удаления карточки
-function handleDeleteConfirmation() {
-  this.confirmButton.textContent = 'Удаление...';
-  api
-    .deleteCard(this.cardId)
-    .then((deleteMessage) => {
-      const card = document.getElementById(this.cardId);
-      card.remove();
+//обработчик отправки формы редактирования аватара
+function updateAvatar(inputValues) {
+  avatarEditPopup.renderLoading(true);
+  const {avatar} = inputValues
+  api.updateAvatar(avatar)
+    .then((res) => {
+      currentUser.setUserInfo(res);
+      avatarEditPopup.close();
     })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
-      this.close();
-      this.confirmButton.textContent = 'Да';
+      avatarEditPopup.renderLoading(false);
+    });
+  }
+  
+ 
+function addNewCard(inputValues) {
+  cardAdderPopup.renderLoading(true);
+  const placeName = inputValues['place-name'];
+  const placeLink = inputValues['place-img-link'];
+  api.createCard(placeName, placeLink)
+    .then((res) => {
+    cardList.addItem(cardList.createItem(res, currentUser));
+    cardAdderPopup.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      cardAdderPopup.renderLoading(false);
+    });
+}
+      
+//обработчик подтверждения удаления карточки
+function handleDeleteConfirmation() {
+  deleteConfirmationPopup.renderLoading(true);
+   api
+   .deleteCard(deleteConfirmationPopup.cardId)
+    .then((deleteMessage) => {
+       const card = document.getElementById(deleteConfirmationPopup.cardId);
+      card.remove();
+      deleteConfirmationPopup.close();
+    })
+    .catch((err) => {
+       console.log(err);
+     })
+     .finally(() => {
+      deleteConfirmationPopup.renderLoading(false);
+ });
+}
+
+//обработчик отправки формы, который передается в конструктор экземпляра класса
+function updateUserInfo(inputValues) {
+  userEditPopup.renderLoading(true);
+  const {name, about} = inputValues;
+  api.updateUser(name, about)
+      .then((res) => {
+        currentUser.setUserInfo(res);
+        userEditPopup.close();
+      })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      userEditPopup.renderLoading(false);
     });
 }
 
 //функция обработчик нажатия на кнопку Like
 function handleLikeClick(card) {
   const action = card.selectLikeAction();
-  api
-    .setLike(card.getId(), action)
-    .then((card) => {
-      this._renderLikeCount(card);
-      this._renderLike();
-      this._isLikedByMe = !this._isLikedByMe;
+  api.setLike(card.getId(), action)
+    .then((res) => {
+      card.renderLikeCount(res);
+      card.renderLike();
+      card.isLikedByMe = !card.isLikedByMe;
     })
     .catch((err) => {
       console.log(err);
@@ -225,7 +182,7 @@ function handleLikeClick(card) {
 
 // функция проверки наличия нашего пользователя среди лайкнувших карточку
 function checkLikeState(card, user) {
-  return Boolean(card.likes.find((like) => like._id === user._id));
+  return Boolean(card.likes.find((like) => like._id === user.id));
 }
 //обработчик нажатия на кнопку удаления карточки
 const openDeleteConfirmationPopup = (card) => {
@@ -237,15 +194,24 @@ const openDeleteConfirmationPopup = (card) => {
 function openImage(card) {
   imagePopup.open(card);
 }
-//метод объекта PopupWithImage, который наполняет разметку попапа картинки и открывает его
-// function openImagePopup(card) {
-//   this._popup.querySelector('.popup__image').src = card.link;
-//   this._popup.querySelector('.popup__image').alt = card.name;
-//   this._popup.querySelector('.popup__img-caption').textContent = card.name;
-//   this.open();
-// }
 
-deleteConfirmationPopup.setEventListener();
-cardAddFormValidator.enableValidation();
-profileEditFormValidator.enableValidation();
-avatarEditFormValidator.enableValidation();
+userEditPopup.setEventListeners();
+cardAdderPopup.setEventListeners();
+avatarEditPopup.setEventListeners();
+imagePopup.setEventListeners();
+deleteConfirmationPopup.setEventListeners();
+
+// Вешаем слушатели на кнопки
+addBtn.addEventListener('click', function () {
+  formValidators['card-form'].resetValidity();
+  cardAdderPopup.open();
+});
+avatarChangeBtn.addEventListener('click', function () {
+  formValidators['avatar-form'].resetValidity();
+  avatarEditPopup.open();
+});
+editBtn.addEventListener('click', function () {
+  formValidators['editor-form'].resetValidity();
+  userEditPopup.setInputValues(currentUser.getUserInfo());
+  userEditPopup.open();
+});

@@ -18,6 +18,7 @@ const apiConfig = {
 };
 
 const validationConfig = {
+  formSelector: '.form',
   inputSelector: '.form__item',
   buttonSelector: '.form__save-button',
   buttonInactiveClass: 'form__save-button_disabled',
