@@ -40,11 +40,16 @@
 
 ---
 
-## <a id="author" />Автор
+## <a id="author" />Авторы
 
-Андрей Колосов 2021г
+Андрей Колосов 2022г
 
 - [Telegram ](https://t.me/RustyVoid)
 - [Instagram](https://www.instagram.com/akolosof/)
+
+Ренат Ибрагимов 2022г
+
+- [e-mail](bik00014@gmail.com)
+- [GitHub](https://github.com/SmthOfValue)
 
 [Наверх](#top)

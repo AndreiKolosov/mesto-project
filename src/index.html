@@ -41,13 +41,13 @@
     <section class="popup popup_type_profile-editor">
       <div class="popup__container">
         <button type="button" class="page__button popup__close-button"></button>
-        <form class="form" id="editor-form" novalidate>
+        <form class="form" id="editor-form" name="editor-form" novalidate>
           <h2 class="form__heading">Редактировать профиль</h2>
           <fieldset class="form__input-container form__user-info">
-            <input type="text" class="form__item" name="user-name" placeholder="Имя" required id="user-name" minlength="2" maxlength="40">
-            <span class="form__item-error user-name_error"></span>
-            <input type="text" class="form__item" name="user-description" placeholder="О себе" id="user-description" required minlength="2" maxlength="200">
-            <span class="form__item-error user-description_error"></span>
+            <input type="text" class="form__item" name="name" placeholder="Имя" required id="name" minlength="2" maxlength="40">
+            <span class="form__item-error name_error"></span>
+            <input type="text" class="form__item" name="about" placeholder="О себе" id="about" required minlength="2" maxlength="200">
+            <span class="form__item-error about_error"></span>
             <button type="submit" class="page__button form__save-button">Сохранить</button>
           </fieldset>
         </form>
@@ -57,11 +57,11 @@
     <section class="popup popup_type_avatar-editor">
       <div class="popup__container">
         <button type="button" class="page__button popup__close-button"></button>
-        <form class="form" id="avatar-form">
+        <form class="form" id="avatar-form" name="avatar-form" novalidate>
           <h2 class="form__heading">Обновить аватар</h2>
           <fieldset class="form__input-container form__new-place">
-            <input type="url" class="form__item" name="user-avatar" placeholder="Ссылка на новый аватар" value="" id="user-avatar" required>
-            <span class="form__item-error user-avatar_error"></span>
+            <input type="url" class="form__item" name="avatar" placeholder="Ссылка на новый аватар" value="" id="avatar" required>
+            <span class="form__item-error avatar_error"></span>
             <button type="submit" class="page__button form__save-button">Сохранить</button>
           </fieldset>
         </form>
@@ -71,7 +71,7 @@
     <section class="popup popup_type_card-adder">
       <div class="popup__container">
         <button type="button" class="page__button popup__close-button"></button>
-        <form class="form" id="card-form">
+        <form class="form" id="card-form" name="card-form" novalidate>
           <h2 class="form__heading">Новое место</h2>
           <fieldset class="form__input-container form__new-place">
             <input type="text" class="form__item" name="place-name" placeholder="Название" required value="" id="place-name" minlength="2" maxlength="30">
@@ -95,12 +95,8 @@
     <section class="popup popup_type_confirm">
       <div class="popup__container">
         <button type="button" class="page__button popup__close-button"></button>
-        <form class="form" id="confirm-form">
-          <h2 class="popup__heading">Вы уверены?</h2>
-          <input type="text" class="form__item form__item_hiden" id="confirm-input" name="card-id" required>
-          <span class="form__item-error confirm-input_error"></span>
-          <button type="submit" class="page__button form__save-button">Да</button>
-        </form>
+        <h2 class="popup__heading">Вы уверены?</h2>
+        <button type="button" class="page__button form__save-button">Да</button>
       </div>
     </section>
 
